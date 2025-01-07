@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { Outlet, Route, Routes } from "react-router-dom";
+import Header from "./components/Header/Header";
+import Navbar from "./components/Navbar/Navbar";
+
+const Layout = () => (
+  <div className="page">
+    <Header />
+    <div className="wrap">
+      <Outlet />
+    </div>
+    <Navbar />
+  </div>
+);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<h2>메인</h2>} />
+          <Route path="/page1" element={<h2>페이지1</h2>} />
+          <Route path="/page2" element={<h2>페이지2</h2>} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 
