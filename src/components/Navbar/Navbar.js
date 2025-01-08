@@ -1,25 +1,36 @@
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const location = useLocation();
 
-  const allowedPaths = ["/", "/page1", "/page2", "/page3", "/page4"];
+  const allowedPaths = ["/", "/page1", "/page2"];
 
   // 현재 경로가 allowedPaths에 포함되지 않으면 null 반환
   if (!allowedPaths.includes(location.pathname)) {
     return null;
   }
 
+  const handleNavigation = (path) => {
+    // 현재 경로와 이동하려는 경로가 같으면 무시
+    if (location.pathname === path) return;
+    navigate(path, { replace: true });
+  };
+
   return (
-    <div className="nav_bar">
+    <nav className="nav_bar">
       <div>
         <NavLink
           to="/"
           className={({ isActive }) =>
             isActive ? "nav-link active" : "nav-link"
           }
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavigation("/");
+          }}
         >
           테
         </NavLink>
@@ -31,6 +42,10 @@ export default function Navbar() {
           className={({ isActive }) =>
             isActive ? "nav-link active" : "nav-link"
           }
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavigation("/page1");
+          }}
         >
           스
         </NavLink>
@@ -42,10 +57,14 @@ export default function Navbar() {
           className={({ isActive }) =>
             isActive ? "nav-link active" : "nav-link"
           }
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavigation("/page2");
+          }}
         >
           트
         </NavLink>
       </div>
-    </div>
+    </nav>
   );
 }
