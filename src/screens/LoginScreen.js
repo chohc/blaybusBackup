@@ -39,8 +39,8 @@ const LoginScreen = () => {
           style={{
             ...styles.errorBox,
             opacity: fadeOut ? 0 : 1,
-            visibility: fadeOut ? "hidden" : "visible", // Adjust visibility with fade
-            transition: "opacity 0.5s ease-out, visibility 0.5s ease-out", // Combined transition
+            visibility: fadeOut ? "hidden" : "visible", 
+            transition: "opacity 0.5s ease-out, visibility 0.5s ease-out", 
           }}
         >
           <span style={styles.errorText}>아이디 또는 비밀번호를 다시 확인해주세요.</span>
@@ -48,6 +48,7 @@ const LoginScreen = () => {
       )}
       <img src={Logo} alt="Logo" style={styles.logo} />
       <input
+        className="Body-1-r"
         placeholder={"아이디"}
         value={input1}
         onChange={(event) => onChangeInput1(event.target.value)}
@@ -60,6 +61,7 @@ const LoginScreen = () => {
       />
       <input
         type="password"
+        className="Body-1-r"
         placeholder={"비밀번호"}
         value={input2}
         onChange={(event) => onChangeInput2(event.target.value)}
@@ -83,6 +85,7 @@ const LoginScreen = () => {
         disabled={isButtonDisabled}
       >
         <span
+        className="title-3-bold"
           style={{
             color: isButtonDisabled ? colors.gray[500] : "#FFFFFF",
             fontSize: 18,
@@ -92,7 +95,8 @@ const LoginScreen = () => {
         </span>
       </button>
       <div style={styles.linksContainer}>
-        <span style={styles.link}>아이디 찾기</span>
+        <span
+        class style={styles.link}>아이디 찾기</span>
         <div style={styles.divider} />
         <span style={styles.link}>비밀번호 찾기</span>
       </div>
@@ -104,7 +108,6 @@ const styles = {
   container: {
     display: "flex",
     flexDirection: "column",
-    background: colors.gray[50],
     paddingTop: 204,
     height: "100vh",
     justifyContent: "flex-start",
@@ -116,11 +119,9 @@ const styles = {
   },
   input: {
     color: colors.gray[900],
-    fontSize: 16,
     marginBottom: 16,
     width: "calc(100% - 40px)",
     maxWidth: 400,
-    background: colors.gray[100],
     borderRadius: 8,
     border: "1px solid",
     padding: 18,
@@ -152,9 +153,9 @@ const styles = {
     marginBottom: 318,
   },
   link: {
-    color: colors.gray[900],
     fontSize: 14,
     cursor: "pointer",
+    background : "#FFFFFF",
   },
   divider: {
     width: 1,
