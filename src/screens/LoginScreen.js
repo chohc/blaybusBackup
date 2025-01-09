@@ -8,6 +8,7 @@ const LoginScreen = () => {
   const [input2, setInput2] = useState(""); 
   const [focusedInput, setFocusedInput] = useState(null); 
   const [showError, setShowError] = useState(false); 
+  const [fadeOut, setFadeOut] = useState(false); 
 
   const onChangeInput1 = (value) => setInput1(value);
   const onChangeInput2 = (value) => setInput2(value);
@@ -17,9 +18,15 @@ const LoginScreen = () => {
   const handleLogin = () => {
     if (input1 !== "abcd" || input2 !== "1234") {
       setShowError(true);
+      setFadeOut(false);
+
       setTimeout(() => {
-        setShowError(false);
-      }, 3000); 
+        setFadeOut(true); 
+      }, 3000);
+
+      setTimeout(() => {
+        setShowError(false); 
+      }, 3500); 
     } else {
       alert("로그인 성공!");
     }
@@ -28,7 +35,14 @@ const LoginScreen = () => {
   return (
     <div className="page" style={styles.container}>
       {showError && (
-        <div style={{ ...styles.errorBox, opacity: showError ? 1 : 0 }}>
+        <div
+          style={{
+            ...styles.errorBox,
+            opacity: fadeOut ? 0 : 1,
+            visibility: fadeOut ? "hidden" : "visible", // Adjust visibility with fade
+            transition: "opacity 0.5s ease-out, visibility 0.5s ease-out", // Combined transition
+          }}
+        >
           <span style={styles.errorText}>아이디 또는 비밀번호를 다시 확인해주세요.</span>
         </div>
       )}
@@ -160,7 +174,6 @@ const styles = {
     width: 350,
     padding: "8px 16px",
     textAlign: "left",
-    transition: "opacity 0.5s ease-out", 
   },
   errorText: {
     color: "#ED4956",
