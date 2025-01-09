@@ -1,42 +1,70 @@
 import React, { useState } from "react";
 import "../App.css";
-import Logo from "../images/Logo.png"; 
+import Logo from "../images/Logo.png";
+import colors from "../colors/colors";
 
 const LoginScreen = () => {
-  const [input1, setInput1] = useState("");
-  const [input2, setInput2] = useState("");
+  const [input1, setInput1] = useState(""); 
+  const [input2, setInput2] = useState(""); 
+  const [focusedInput, setFocusedInput] = useState(null); 
 
   const onChangeInput1 = (value) => setInput1(value);
   const onChangeInput2 = (value) => setInput2(value);
 
+  const isButtonDisabled = !input1 || !input2;
+
   return (
-    <div className="page">
-      <img
-         src={Logo}
-        alt="Logo"
-        style={styles.logo}
-      />
+    <div className="page" style={styles.container}>
+      <img src={Logo} alt="Logo" style={styles.logo} />
       <input
         placeholder={"아이디"}
         value={input1}
         onChange={(event) => onChangeInput1(event.target.value)}
-        style={styles.input}
+        onFocus={() => setFocusedInput("input1")}
+        onBlur={() => setFocusedInput(null)}
+        style={{
+          ...styles.input,
+          borderColor: focusedInput === "input1" ? "black" : colors.gray[400],
+        }}
       />
       <input
         type="password"
         placeholder={"비밀번호"}
         value={input2}
         onChange={(event) => onChangeInput2(event.target.value)}
-        style={{ ...styles.input, ...styles.passwordInput }}
+        onFocus={() => setFocusedInput("input2")}
+        onBlur={() => setFocusedInput(null)}
+        style={{
+          ...styles.input,
+          ...styles.passwordInput,
+          borderColor: focusedInput === "input2" ? "black" : colors.gray[400],
+        }}
       />
-      <button style={styles.button} onClick={() => alert("로그인!")}>
-        <span style={styles.buttonText}>{"로그인"}</span>
+      <button
+        style={{
+          ...styles.button,
+          backgroundColor: isButtonDisabled
+            ? colors.gray[300]
+            : colors.orange[500],
+          cursor: isButtonDisabled ? "not-allowed" : "pointer",
+        }}
+        onClick={() => !isButtonDisabled && alert("로그인!")}
+        disabled={isButtonDisabled}
+      >
+        <span
+          style={{
+            color: isButtonDisabled ? colors.gray[500] : "#FFFFFF", 
+            fontSize: 18,
+         
+          }}
+        >
+          로그인
+        </span>
       </button>
       <div style={styles.linksContainer}>
-        <span style={styles.link}>{"아이디 찾기"}</span>
+        <span style={styles.link}>아이디 찾기</span>
         <div style={styles.divider} />
-        <span style={styles.link}>{"비밀번호 찾기"}</span>
-
+        <span style={styles.link}>비밀번호 찾기</span>
       </div>
     </div>
   );
@@ -46,26 +74,28 @@ const styles = {
   container: {
     display: "flex",
     flexDirection: "column",
-    background: "#FFFFFF",
-    paddingTop: 19,
+    background: colors.gray[50],
+    paddingTop: 204, 
     height: "100vh",
-    justifyContent: "center",
+    justifyContent: "flex-start", 
     alignItems: "center",
   },
   logo: {
     height: 30,
-    marginBottom: 44,
+    marginBottom: 44, 
   },
   input: {
-    color: "#868B94",
+    color: colors.gray[900],
     fontSize: 16,
     marginBottom: 16,
     width: "calc(100% - 40px)",
     maxWidth: 400,
-    background: "none",
+    background: colors.gray[100],
     borderRadius: 8,
-    border: "1px solid #D1D3D8",
+    border: "1px solid",
     padding: 18,
+    outline: "none",
+    transition: "border-color 0.3s", 
   },
   passwordInput: {
     marginBottom: 24,
@@ -74,7 +104,6 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    background: "#DCDEE3",
     borderRadius: 8,
     border: "none",
     paddingTop: 18,
@@ -83,11 +112,6 @@ const styles = {
     width: "calc(100% - 40px)",
     maxWidth: 400,
     textAlign: "center",
-  },
-  buttonText: {
-    color: "#ADB1BA",
-    fontSize: 18,
-    fontWeight: "bold",
   },
   linksContainer: {
     display: "flex",
@@ -98,19 +122,14 @@ const styles = {
     marginBottom: 318,
   },
   link: {
-    color: "#393A40",
+    color: colors.gray[900],
     fontSize: 14,
     cursor: "pointer",
   },
   divider: {
     width: 1,
     height: 9,
-    backgroundColor: "#393A40",
-  },
-  signupLink: {
-    color: "#FF5C35",
-    fontSize: 14,
-    cursor: "pointer",
+    backgroundColor: colors.gray[400],
   },
 };
 
