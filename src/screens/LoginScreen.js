@@ -29,7 +29,7 @@ const LoginScreen = () => {
         onChange={(event) => onChangeInput2(event.target.value)}
         style={{ ...styles.input, ...styles.passwordInput }}
       />
-      <button style={styles.button} onClick={() => alert("Pressed!")}>
+      <button style={styles.button} onClick={() => alert("로그인!")}>
         <span style={styles.buttonText}>{"로그인"}</span>
       </button>
       <div style={styles.linksContainer}>
