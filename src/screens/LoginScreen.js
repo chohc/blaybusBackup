@@ -4,17 +4,34 @@ import Logo from "../images/Logo.png";
 import colors from "../colors/colors";
 
 const LoginScreen = () => {
-  const [input1, setInput1] = useState(""); 
+  const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState(""); 
   const [focusedInput, setFocusedInput] = useState(null); 
+  const [showError, setShowError] = useState(false); 
 
   const onChangeInput1 = (value) => setInput1(value);
   const onChangeInput2 = (value) => setInput2(value);
 
   const isButtonDisabled = !input1 || !input2;
 
+  const handleLogin = () => {
+    if (input1 !== "abcd" || input2 !== "1234") {
+      setShowError(true);
+      setTimeout(() => {
+        setShowError(false);
+      }, 3000); 
+    } else {
+      alert("로그인 성공!");
+    }
+  };
+
   return (
     <div className="page" style={styles.container}>
+      {showError && (
+        <div style={{ ...styles.errorBox, opacity: showError ? 1 : 0 }}>
+          <span style={styles.errorText}>아이디 또는 비밀번호를 다시 확인해주세요.</span>
+        </div>
+      )}
       <img src={Logo} alt="Logo" style={styles.logo} />
       <input
         placeholder={"아이디"}
@@ -48,14 +65,13 @@ const LoginScreen = () => {
             : colors.orange[500],
           cursor: isButtonDisabled ? "not-allowed" : "pointer",
         }}
-        onClick={() => !isButtonDisabled && alert("로그인!")}
+        onClick={handleLogin}
         disabled={isButtonDisabled}
       >
         <span
           style={{
-            color: isButtonDisabled ? colors.gray[500] : "#FFFFFF", 
+            color: isButtonDisabled ? colors.gray[500] : "#FFFFFF",
             fontSize: 18,
-         
           }}
         >
           로그인
@@ -75,14 +91,14 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     background: colors.gray[50],
-    paddingTop: 204, 
+    paddingTop: 204,
     height: "100vh",
-    justifyContent: "flex-start", 
+    justifyContent: "flex-start",
     alignItems: "center",
   },
   logo: {
     height: 30,
-    marginBottom: 44, 
+    marginBottom: 44,
   },
   input: {
     color: colors.gray[900],
@@ -95,7 +111,7 @@ const styles = {
     border: "1px solid",
     padding: 18,
     outline: "none",
-    transition: "border-color 0.3s", 
+    transition: "border-color 0.3s",
   },
   passwordInput: {
     marginBottom: 24,
@@ -130,6 +146,25 @@ const styles = {
     width: 1,
     height: 9,
     backgroundColor: colors.gray[400],
+  },
+  errorBox: {
+    position: "absolute",
+    top: 133,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    background: "#ED49561A",
+    borderRadius: 8,
+    border: "none",
+    width: 350,
+    padding: "8px 16px",
+    textAlign: "left",
+    transition: "opacity 0.5s ease-out", 
+  },
+  errorText: {
+    color: "#ED4956",
+    fontSize: 14,
   },
 };
 
