@@ -40,7 +40,7 @@ export default function Header() {
       setIsVisible(true);
     }
     setLastScrollY(scrollY);
-  }, [scrollY]);
+  }, [scrollY, lastScrollY]);
   // -----------
 
   // 추가된 코드: 특정 경로를 제외한 모든 경로에 뒤로가기 버튼 표시
