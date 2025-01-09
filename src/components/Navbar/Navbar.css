@@ -11,7 +11,7 @@
   padding: 1px 0px;
   box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
   min-width: 100vw;
-  max-width: 420px;
+  max-width: 390px;
   margin-left: auto;
   margin-right: auto;
   z-index: 1000;
@@ -20,7 +20,8 @@
     .nav-link {
       color: rgb(200, 200, 200);
       font-size: 20px;
-      font-weight: bold;
+      font-weight: 700;
+      font-family: "Pretendard";
     }
 
     .active {
@@ -29,8 +30,8 @@
   }
 }
 
-@media (min-width: 420px) {
+@media (min-width: 390px) {
   .nav_bar {
-    min-width: 420px;
+    min-width: 390px;
   }
 }
