@@ -6,7 +6,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const allowedPaths = ["/", "/page1", "/page2"];
+  const allowedPaths = ["/", "/page1", "/page2", "/login"]; // 로그인 경로 추가
 
   // 현재 경로가 allowedPaths에 포함되지 않으면 null 반환
   if (!allowedPaths.includes(location.pathname)) {
@@ -63,6 +63,21 @@ export default function Navbar() {
           }}
         >
           트
+        </NavLink>
+      </div>
+
+      <div> {/* 로그인 네비게이션 추가 */} 
+        <NavLink
+          to="/login"
+          className={({ isActive }) =>
+            isActive ? "nav-link active" : "nav-link"
+          }
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavigation("/login");
+          }}
+        >
+          로그인
         </NavLink>
       </div>
     </nav>
