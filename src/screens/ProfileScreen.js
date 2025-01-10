@@ -5,23 +5,9 @@ import Profile from "../images/profile/임시.png";
 import Setting from "../images/profile/settings.svg";
 import GradeChip from "../components/GradeChip";
 import Arrow from "../icons/keyboard_arrow_right.svg";
+import PressableButton from "../components/PressableButton";
 
 const ProfileScreen = () => {
-  const [isSettingPressed, setIsSettingPressed] = useState(false);
-  const [isArrowPressed, setIsArrowPressed] = useState(false);
-
-  const handlePress = (setPressed) => (event) => {
-    if (event.type === "mousedown" || event.type === "touchstart") {
-      setPressed(true);
-    } else if (
-      event.type === "mouseup" ||
-      event.type === "touchend" ||
-      event.type === "mouseleave"
-    ) {
-      setPressed(false);
-    }
-  };
-
   const Content = ({ text1, text2, isMargin }) => {
     return (
       <div
@@ -50,24 +36,13 @@ const ProfileScreen = () => {
       </div>
       <div style={styles.circle}>
         <img src={Profile} alt="이미지" style={styles.image} />
-        <div
-          onMouseDown={handlePress(setIsSettingPressed)}
-          onMouseUp={handlePress(setIsSettingPressed)}
-          onMouseLeave={handlePress(setIsSettingPressed)}
-          onTouchStart={handlePress(setIsSettingPressed)}
-          onTouchEnd={handlePress(setIsSettingPressed)}
-          onClick={() => {
-            console.log("설정 클릭");
-          }}
-          style={{
-            ...styles.miniCircle,
-            backgroundColor: isSettingPressed ? colors.gray[100] : "#fff",
-          }}
-          aria-label="설정 버튼"
-          role="button"
+        <PressableButton
+          onClick={() => console.log("설정 클릭")}
+          style={styles.miniCircle}
+          pressedStyle={{ backgroundColor: colors.gray[100] }}
         >
           <img src={Setting} alt="이미지" style={{ width: 24, height: 24 }} />
-        </div>
+        </PressableButton>
       </div>
       <div style={styles.boxContainer}>
         <div style={{ ...styles.rowContainer, justifyContent: "flex-start" }}>
@@ -120,24 +95,13 @@ const ProfileScreen = () => {
           <span className="subtitle-1-bold" style={{ color: colors.gray[900] }}>
             비밀번호 변경
           </span>
-          <div
-            onMouseDown={handlePress(setIsArrowPressed)}
-            onMouseUp={handlePress(setIsArrowPressed)}
-            onMouseLeave={handlePress(setIsArrowPressed)}
-            onTouchStart={handlePress(setIsArrowPressed)}
-            onTouchEnd={handlePress(setIsArrowPressed)}
-            onClick={() => {
-              console.log("비밀번호 변경 클릭");
-            }}
-            aria-label="비밀번호 변경 버튼"
-            role="button"
+          <PressableButton
+            onClick={() => console.log("비밀번호 변경 클릭")}
+            style={{ cursor: "pointer" }}
+            pressedStyle={{ opacity: 0.5 }}
           >
-            <img
-              src={Arrow}
-              alt="arrow"
-              style={{ opacity: isArrowPressed ? 0.5 : 1 }}
-            />
-          </div>
+            <img src={Arrow} alt="arrow" />
+          </PressableButton>
         </div>
       </div>
     </div>
