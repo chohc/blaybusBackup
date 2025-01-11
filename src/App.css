@@ -34,6 +34,10 @@ html {
   font-family: "Mooli", sans-serif;
 }
 
+:root {
+  --page-width: 390px;
+}
+
 .page {
   min-width: 100vw;
   max-width: 390px;

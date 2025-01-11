@@ -2,33 +2,54 @@ import React, { useState } from "react";
 import "../App.css";
 import Logo from "../images/Logo.png";
 import colors from "../colors/colors";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const LoginScreen = () => {
   const [input1, setInput1] = useState("");
-  const [input2, setInput2] = useState(""); 
-  const [focusedInput, setFocusedInput] = useState(null); 
-  const [showError, setShowError] = useState(false); 
-  const [fadeOut, setFadeOut] = useState(false); 
+  const [input2, setInput2] = useState("");
+  const [focusedInput, setFocusedInput] = useState(null);
+  const [showError, setShowError] = useState(false);
+  const [fadeOut, setFadeOut] = useState(false);
+
+  const navigate = useNavigate();
 
   const onChangeInput1 = (value) => setInput1(value);
   const onChangeInput2 = (value) => setInput2(value);
 
   const isButtonDisabled = !input1 || !input2;
 
-  const handleLogin = () => {
-    if (input1 !== "abcd" || input2 !== "1234") {
+  const handleLogin = async () => {
+    try {
+      console.log(input1, input2);
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/v1/auth/login`,
+        { loginId: input1, password: input2 },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response.message);
+      if (response.status === 200) {
+        alert("로그인 성공!");
+        navigate("/", { replace: true });
+      }
+    } catch (error) {
+      console.log("로그인 POST 실패: ", error);
+
       setShowError(true);
       setFadeOut(false);
 
       setTimeout(() => {
-        setFadeOut(true); 
+        setFadeOut(true);
       }, 3000);
 
       setTimeout(() => {
-        setShowError(false); 
-      }, 3500); 
-    } else {
-      alert("로그인 성공!");
+        setShowError(false);
+      }, 3500);
     }
   };
 
@@ -39,11 +60,13 @@ const LoginScreen = () => {
           style={{
             ...styles.errorBox,
             opacity: fadeOut ? 0 : 1,
-            visibility: fadeOut ? "hidden" : "visible", 
-            transition: "opacity 0.5s ease-out, visibility 0.5s ease-out", 
+            visibility: fadeOut ? "hidden" : "visible",
+            transition: "opacity 0.5s ease-out, visibility 0.5s ease-out",
           }}
         >
-          <span style={styles.errorText}>아이디 또는 비밀번호를 다시 확인해주세요.</span>
+          <span style={styles.errorText}>
+            아이디 또는 비밀번호를 다시 확인해주세요.
+          </span>
         </div>
       )}
       <img src={Logo} alt="Logo" style={styles.logo} />
@@ -85,7 +108,7 @@ const LoginScreen = () => {
         disabled={isButtonDisabled}
       >
         <span
-        className="title-3-bold"
+          className="title-3-bold"
           style={{
             color: isButtonDisabled ? colors.gray[500] : "#FFFFFF",
             fontSize: 18,
@@ -95,8 +118,7 @@ const LoginScreen = () => {
         </span>
       </button>
       <div style={styles.linksContainer}>
-        <span
-        class style={styles.link}>아이디 찾기</span>
+        <span style={styles.link}>아이디 찾기</span>
         <div style={styles.divider} />
         <span style={styles.link}>비밀번호 찾기</span>
       </div>
@@ -155,7 +177,7 @@ const styles = {
   link: {
     fontSize: 14,
     cursor: "pointer",
-    background : "#FFFFFF",
+    background: "#FFFFFF",
   },
   divider: {
     width: 1,

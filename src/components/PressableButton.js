@@ -31,6 +31,7 @@ const PressableButton = ({
       onClick={onClick}
       style={{
         ...style,
+        ...{ cursor: "pointer", WebkitTapHighlightColor: "transparent" },
         ...(isPressed ? pressedStyle : {}),
       }}
       role="button"

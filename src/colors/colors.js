@@ -29,6 +29,10 @@ const colors = {
     Gold: "#F4BF21",
     Sapphier: "#3DA5EF",
     Ruby: "#EE554C",
+    Amethyst: "#AB5EEB",
+  },
+  Primary: {
+    bg: "#FFF3F0",
   },
 };
 

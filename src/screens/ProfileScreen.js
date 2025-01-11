@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "../fonts/font.css";
 import colors from "../colors/colors";
 import Profile from "../images/profile/임시.png";
@@ -6,32 +6,26 @@ import Setting from "../images/profile/settings.svg";
 import GradeChip from "../components/GradeChip";
 import Arrow from "../icons/keyboard_arrow_right.svg";
 import PressableButton from "../components/PressableButton";
+import { theme } from "../themes/theme";
 
 const ProfileScreen = () => {
   const Content = ({ text1, text2, isMargin }) => {
     return (
       <div
         style={{
-          ...styles.rowContainer,
-          ...(isMargin && styles.marginBottom32),
+          ...theme.boxTheme.rowContainer,
+          ...(isMargin && styles.marginBottom24),
         }}
       >
-        <span className="subtitle-1-bold" style={{ color: colors.gray[900] }}>
-          {text1}
-        </span>
-        <span
-          className="subtitle-1-regular"
-          style={{ color: colors.gray[900] }}
-        >
-          {text2}
-        </span>
+        <span className="subtitle-1-bold">{text1}</span>
+        <span className="subtitle-1-regular">{text2}</span>
       </div>
     );
   };
 
   return (
-    <div className="page" style={styles.container}>
-      <div style={styles.head}>
+    <div className="page" style={theme.pinkPage.container}>
+      <div style={theme.pinkPage.head}>
         <span className="title-3-bold">프로필</span>
       </div>
       <div style={styles.circle}>
@@ -44,27 +38,35 @@ const ProfileScreen = () => {
           <img src={Setting} alt="이미지" style={{ width: 24, height: 24 }} />
         </PressableButton>
       </div>
-      <div style={styles.boxContainer}>
-        <div style={{ ...styles.rowContainer, justifyContent: "flex-start" }}>
+      <div style={theme.boxTheme.boxContainer}>
+        <div
+          style={{
+            ...theme.boxTheme.rowContainer,
+            justifyContent: "flex-start",
+          }}
+        >
           <GradeChip text="F1-I" color={colors.Level.Bronze} />
-          <span
-            className="subtitle-1-bold"
-            style={{ color: colors.gray[900], marginLeft: 12 }}
-          >
-            레벨업까지 <span style={{ color: colors.Level.Bronze }}>843do</span>{" "}
+          <span className="subtitle-1-regular" style={{ marginLeft: 12 }}>
+            레벨업까지{" "}
+            <span
+              className="subtitle-1-bold"
+              style={{ color: colors.Level.Bronze }}
+            >
+              843do
+            </span>{" "}
             남았어요!
           </span>
         </div>
         <div
           style={{
-            ...styles.rowContainer,
+            ...theme.boxTheme.rowContainer,
             marginTop: 12,
           }}
         >
-          <div style={styles.barContainer}>
+          <div style={{ ...theme.boxTheme.barContainer, width: "82%" }}>
             <div
               style={{
-                ...styles.colorbar,
+                ...theme.boxTheme.colorbar,
                 width: "85%",
                 backgroundColor: colors.Level.Bronze,
               }}
@@ -73,31 +75,27 @@ const ProfileScreen = () => {
           <span className="subtitle-1-bold">85%</span>
         </div>
       </div>
-      <div style={styles.boxContainer}>
+      <div style={theme.boxTheme.boxContainer}>
         <Content text1="사번" text2="2023010101" isMargin={true} />
         <Content text1="이름" text2="김민수" isMargin={true} />
-        <div style={{ ...styles.rowContainer, marginBottom: 32 }}>
-          <span className="subtitle-1-bold" style={{ color: colors.gray[900] }}>
+        <div
+          style={{ ...theme.boxTheme.rowContainer, ...styles.marginBottom24 }}
+        >
+          <span className="subtitle-1-bold">
             소속 <span style={styles.line} /> 직무그룹
           </span>
-          <span
-            className="subtitle-1-regular"
-            style={{ color: colors.gray[900] }}
-          >
+          <span className="subtitle-1-regular">
             음성 1센터 <span style={styles.line} /> 1
           </span>
         </div>
         <Content text1="입사일" text2="2023년 1월 1일" isMargin={false} />
       </div>
-      <div style={styles.boxContainer}>
+      <div style={{ ...theme.boxTheme.boxContainer, marginBottom: 29 }}>
         <Content text1="아이디" text2="minsukim" isMargin={true} />
-        <div style={styles.rowContainer}>
-          <span className="subtitle-1-bold" style={{ color: colors.gray[900] }}>
-            비밀번호 변경
-          </span>
+        <div style={theme.boxTheme.rowContainer}>
+          <span className="subtitle-1-bold">비밀번호 변경</span>
           <PressableButton
             onClick={() => console.log("비밀번호 변경 클릭")}
-            style={{ cursor: "pointer" }}
             pressedStyle={{ opacity: 0.5 }}
           >
             <img src={Arrow} alt="arrow" />
@@ -115,8 +113,8 @@ const styles = {
     height: "100vh",
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "#F4F4F4",
-    padding: "3px 20px 0px 20px",
+    backgroundColor: colors.Primary.bg,
+    padding: "3px 20px",
   },
   head: {
     display: "flex",
@@ -128,7 +126,7 @@ const styles = {
   circle: {
     display: "flex",
     width: 135,
-    aspectRatio: 1,
+    height: 135,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 107,
@@ -148,39 +146,6 @@ const styles = {
     position: "absolute",
     bottom: 0,
     right: 0,
-    cursor: "pointer",
-    WebkitTapHighlightColor: "transparent", // 모바일 하이라이트 효과 제거
-  },
-  boxContainer: {
-    display: "flex",
-    flexDirection: "column",
-    width: "100%",
-    padding: 20,
-    borderRadius: 16,
-    backgroundColor: "#fff",
-    marginBottom: 16,
-  },
-  rowContainer: {
-    display: "flex",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  barContainer: {
-    display: "flex",
-    width: "82%",
-    height: 18,
-    alignItems: "center",
-    backgroundColor: colors.gray[300],
-    borderRadius: 25,
-    position: "relative",
-  },
-  colorbar: {
-    display: "flex",
-    height: 18,
-    borderRadius: 25,
-    position: "absolute",
-    left: 0,
   },
   line: {
     display: "inline-block",
@@ -190,8 +155,8 @@ const styles = {
     verticalAlign: "middle",
     margin: "0 3px",
   },
-  marginBottom32: {
-    marginBottom: 32,
+  marginBottom24: {
+    marginBottom: 24,
   },
 };
 

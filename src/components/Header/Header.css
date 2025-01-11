@@ -57,7 +57,7 @@
   }
 }
 
-@media (min-width: 420px) {
+@media (min-width: 390px) {
   .header {
     min-width: 390px;
   }
