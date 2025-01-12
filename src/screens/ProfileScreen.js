@@ -24,7 +24,7 @@ const ProfileScreen = () => {
   };
 
   return (
-    <div className="page" style={theme.pinkPage.container}>
+    <div className="page" style={{ ...theme.pinkPage.container }}>
       <div style={theme.pinkPage.head}>
         <span className="title-3-bold">프로필</span>
       </div>

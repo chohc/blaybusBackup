@@ -49,7 +49,7 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   -ms-scroll-limit: 0 0 0 0;
   -ms-overflow-style: none;
   overscroll-behavior: none;

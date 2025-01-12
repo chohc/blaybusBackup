@@ -5,7 +5,7 @@ export const theme = {
     container: {
       display: "flex",
       flexDirection: "column",
-      minHeight: 600,
+      minHeight: "100vh",
       justifyContent: "flex-start",
       alignItems: "center",
       backgroundColor: colors.Primary.bg,

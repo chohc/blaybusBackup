@@ -23,18 +23,15 @@ const LoginScreen = () => {
     try {
       console.log(input1, input2);
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/v1/auth/login`,
+        `${process.env.REACT_APP_API_URL}/auth/login`,
         { loginId: input1, password: input2 },
         {
           withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
         }
       );
       console.log(response.message);
       if (response.status === 200) {
-        alert("로그인 성공!");
+        // alert("로그인 성공!");
         navigate("/", { replace: true });
       }
     } catch (error) {
@@ -119,6 +116,7 @@ const LoginScreen = () => {
       </button>
       <div style={styles.linksContainer}>
         <span style={styles.link}>아이디 찾기</span>
+
         <div style={styles.divider} />
         <span style={styles.link}>비밀번호 찾기</span>
       </div>
