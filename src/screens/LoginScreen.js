@@ -54,23 +54,6 @@ const LoginScreen = ({ setIsLogin }) => {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/auth/logout`,
-        {},
-        {
-          withCredentials: true,
-        }
-      );
-      if (response.status == 200) {
-        console.log("로그아웃 성공");
-      }
-    } catch (error) {
-      console.log("로그아웃 error: ", error);
-    }
-  };
-
   return (
     <div className="page" style={styles.container}>
       {showError && (
@@ -133,24 +116,6 @@ const LoginScreen = ({ setIsLogin }) => {
           }}
         >
           로그인
-        </span>
-      </button>
-      <button
-        style={{
-          ...styles.button,
-          backgroundColor: colors.orange[500],
-          cursor: "pointer",
-        }}
-        onClick={handleLogout}
-      >
-        <span
-          className="title-3-bold"
-          style={{
-            color: "#FFFFFF",
-            fontSize: 18,
-          }}
-        >
-          로그아웃웃
         </span>
       </button>
       <div style={styles.linksContainer}>
