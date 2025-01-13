@@ -4,12 +4,12 @@ import colors from "../colors/colors";
 import { theme } from "../themes/theme";
 import Help from "../icons/help.svg";
 import PressableButton from "../components/PressableButton";
-import GradeChip from "../components/GradeChip";
-import GradeTableF from "../images/report/gradetable_f.png";
-import GradeTableB from "../images/report/gradetable_b.png";
-import GradeTableG from "../images/report/gradetable_g.png";
+import LevelChip from "../components/LevelChip";
+import LevelTableF from "../images/myexp/leveltable_f.png";
+import LevelTableB from "../images/myexp/leveltable_b.png";
+import LevelTableG from "../images/myexp/leveltable_g.png";
 
-const ReportScreen = () => {
+const MyExpScreen = () => {
   const [tableVisible, setTableVisible] = useState(false);
   const tableRef = useRef(null);
 
@@ -109,8 +109,8 @@ const ReportScreen = () => {
     );
   };
 
-  const LabelLevel = ({ fullGrade, index }) => {
-    const grade = fullGrade.slice(0, 1);
+  const LabelLevel = ({ fullLevel, index }) => {
+    const level = fullLevel.slice(0, 1);
 
     return (
       <div
@@ -121,16 +121,16 @@ const ReportScreen = () => {
         }}
       >
         <span className="label-1-b" style={{ marginBottom: 4 }}>
-          {grade === "F"
+          {level === "F"
             ? ["F1", "F2", "F3", "F4", "F5"][index]
-            : grade === "B"
+            : level === "B"
             ? ["B1", "B2", "B3", "B4", "B5", "B6"][index]
             : ["G1", "G2", "G3", "G4", "G5", "G6"][index]}
         </span>
         <span style={styles.subText}>
-          {grade === "F"
+          {level === "F"
             ? ["0", "27,000", "63,000", "108,000", "162,000"][index]
-            : grade === "B"
+            : level === "B"
             ? ["0", "24,000", "52,000", "78,000", "117,000", "169,000"][index]
             : ["0", "24,000", "52,000", "78,000", "117,000", "169,000"][index]}
         </span>
@@ -141,7 +141,7 @@ const ReportScreen = () => {
   return (
     <div className="page" style={theme.pinkPage.container}>
       <div style={{ ...theme.pinkPage.head, marginBottom: 20 }}>
-        <span className="title-3-bold">경험치 현황</span>
+        <span className="title-3-bold">내 경험치</span>
       </div>
       {/* 총 누적 경험치 */}
       <div style={theme.boxTheme.boxContainer}>
@@ -239,7 +239,9 @@ const ReportScreen = () => {
             0<span style={styles.grayDo}>do</span>
           </span>
         </div>
-        <span style={styles.subText}>전사프로젝트 경험치에 대한 설명</span>
+        <span style={styles.subText}>
+          올해 획득 가능한 경험치(9000do)에 포함되지 않습니다.
+        </span>
       </div>
       {/* 작년까지 획득한 경험치 */}
       <div style={theme.boxTheme.boxContainer}>
@@ -294,7 +296,7 @@ const ReportScreen = () => {
             </PressableButton>
             {tableVisible && (
               <img
-                src={GradeTableF}
+                src={LevelTableF}
                 alt="table"
                 style={{
                   width: 220,
@@ -327,7 +329,7 @@ const ReportScreen = () => {
             <div
               style={{ position: "absolute", zIndex: 10, left: `${20 - 10}%` }}
             >
-              <GradeChip text={"F1 - I"} color={colors.Level.Bronze} />
+              <LevelChip text={"F1 - I"} color={colors.Level.Bronze} />
             </div>
           </div>
         </div>
@@ -339,13 +341,13 @@ const ReportScreen = () => {
             padding: "0px 0px 0px 6px",
           }}
         >
-          {/* {(grade.startsWith("F") ? [0, 1, 2, 3, 4] : [0, 1, 2, 3, 4, 5]).map(
+          {/* {(level.startsWith("F") ? [0, 1, 2, 3, 4] : [0, 1, 2, 3, 4, 5]).map(
             (n) => (
-              <LabelLevel fullGrade="F1-I" index={n} />
+              <LabelLevel fullLevel="F1-I" index={n} />
             )
           )} */}
           {[0, 1, 2, 3, 4].map((n) => (
-            <LabelLevel fullGrade="F1-I" index={n} />
+            <LabelLevel fullLevel="F1-I" index={n} />
           ))}
         </div>
       </div>
@@ -381,4 +383,4 @@ const styles = {
   },
 };
 
-export default ReportScreen;
+export default MyExpScreen;

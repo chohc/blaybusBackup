@@ -3,29 +3,58 @@ import "../fonts/font.css";
 import colors from "../colors/colors";
 import Profile from "../images/profile/임시.png";
 import Setting from "../images/profile/settings.svg";
-import GradeChip from "../components/GradeChip";
+import LevelChip from "../components/LevelChip";
 import Arrow from "../icons/keyboard_arrow_right.svg";
 import PressableButton from "../components/PressableButton";
 import { theme } from "../themes/theme";
-import { useNavigate } from "react-router-dom";
 import { customAxios } from "../customAxios";
 import Modal from "../components/Modal/Modal";
+import { getTotalExpInfo } from "../CalcEx";
 
 const ProfileScreen = () => {
-  const navigate = useNavigate();
   const [modalVisible, setModalVisible] = useState(false);
+
+  const [employeeNumber, setEmployeeNumber] = useState("");
+  const [name, setName] = useState("");
+  const [hireDate, setHireDate] = useState("");
+  const [department, setDepartment] = useState("");
+  const [jobGroup, setJobGroup] = useState("");
+  const [loginId, setLoginId] = useState("");
+  const [totalExperience, setTotalExperience] = useState(0);
+  const [levelName, setLevelName] = useState("");
 
   useEffect(() => {
     const loadUserInfo = async () => {
       try {
-        const response = await customAxios.get("/members/info");
-        console.log("GET memberinfo: ", response.data);
+        const { data } = await customAxios.get("/members/info");
+        console.log("GET memberinfo: ", data);
+
+        setEmployeeNumber(data.employeeNumber);
+        setName(data.name);
+        setHireDate(data.hireDate);
+        setDepartment(data.department);
+        setJobGroup(data.jobGroup);
+        setLoginId(data.loginId);
+        setTotalExperience(data.totalExperience);
+        // setLevelName(data.levelName);
+        setLevelName("F2-I");
       } catch (error) {
         console.error("GET error: ", error);
       }
     };
     loadUserInfo();
   }, []);
+
+  const formatHireDate = (dateString) => {
+    if (!dateString) return;
+
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("ko-KR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }).format(date);
+  };
 
   const Content = ({ text1, text2, isMargin }) => {
     return (
@@ -40,6 +69,12 @@ const ProfileScreen = () => {
       </div>
     );
   };
+
+  // 경험치 계산
+  const { nextLevel, nextLevelExp, remainExp, percent } = getTotalExpInfo(
+    "F2-I",
+    totalExperience
+  );
 
   return (
     <div className="page" style={{ ...theme.pinkPage.container }}>
@@ -56,6 +91,7 @@ const ProfileScreen = () => {
           <img src={Setting} alt="이미지" style={{ width: 24, height: 24 }} />
         </PressableButton>
       </div>
+
       <div style={theme.boxTheme.boxContainer}>
         <div
           style={{
@@ -64,18 +100,18 @@ const ProfileScreen = () => {
           }}
         >
           <div style={styles.subContainer}>
-            <GradeChip text="F1 - I" color={colors.Level.Bronze} />
+            <LevelChip text={levelName} color={colors.Level.Bronze} />
             <span className="Body-2-b" style={{ marginLeft: 8 }}>
               총 누적 경험치
             </span>
           </div>
           <div style={styles.subContainer}>
             <span className="Body-2-b" style={{ color: colors.Level.Bronze }}>
-              12,657
+              {totalExperience.toLocaleString()}
             </span>
             <pre className="Body-2-b" style={{ color: colors.gray[600] }}>
               {" "}
-              / 13,500do
+              / {nextLevelExp.toLocaleString()}do
             </pre>
           </div>
         </div>
@@ -83,28 +119,29 @@ const ProfileScreen = () => {
           <div
             style={{
               ...theme.boxTheme.colorbar,
-              width: "85%",
+              width: `${percent}%`,
               backgroundColor: colors.Level.Bronze,
             }}
           />
         </div>
         <div style={{ ...theme.boxTheme.rowContainer, marginTop: 8 }}>
-          <span className="label-1-r">F1 - I</span>
+          <span className="label-1-r">{levelName}</span>
           <div style={styles.subContainer}>
             <span className="label-1-b" style={{ color: colors.Level.Bronze }}>
-              863do
+              {`${remainExp.toLocaleString()}do`}
             </span>
             <pre className="label-1-r" style={{ color: colors.gray[600] }}>
               {" "}
               남았어요!
             </pre>
           </div>
-          <span className="label-1-r">F1 - II</span>
+          <span className="label-1-r">{nextLevel}</span>
         </div>
       </div>
+
       <div style={theme.boxTheme.boxContainer}>
-        <Content text1="사번" text2="2023010101" isMargin={true} />
-        <Content text1="이름" text2="김민수" isMargin={true} />
+        <Content text1="사번" text2={employeeNumber} isMargin={true} />
+        <Content text1="이름" text2={name} isMargin={true} />
         <div
           style={{ ...theme.boxTheme.rowContainer, ...styles.marginBottom24 }}
         >
@@ -112,13 +149,17 @@ const ProfileScreen = () => {
             소속 <span style={styles.line} /> 직무그룹
           </span>
           <span className="subtitle-1-regular">
-            음성 1센터 <span style={styles.line} /> 1
+            {department} <span style={styles.line} /> {jobGroup}
           </span>
         </div>
-        <Content text1="입사일" text2="2023년 1월 1일" isMargin={false} />
+        <Content
+          text1="입사일"
+          text2={formatHireDate(hireDate)}
+          isMargin={false}
+        />
       </div>
       <div style={{ ...theme.boxTheme.boxContainer, marginBottom: 29 }}>
-        <Content text1="아이디" text2="minsukim" isMargin={true} />
+        <Content text1="아이디" text2={loginId} isMargin={true} />
         <div style={theme.boxTheme.rowContainer}>
           <span className="subtitle-1-bold">비밀번호 변경</span>
           <PressableButton

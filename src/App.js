@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
-import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import LoginScreen from "./screens/LoginScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import ReportScreen from "./screens/ReportScreen";
+import MyExpScreen from "./screens/MyExpScreen";
 import { getFirebaseToken } from "./FCM";
 import { Toaster } from "react-hot-toast";
 import { setupInterceptors, customAxios } from "./customAxios";
@@ -55,21 +54,21 @@ function App() {
   }, [navigate]);
 
   // 로그인 상태 확인
-  // useEffect(() => {
-  //   const checkLoginStatus = async () => {
-  //     if (isLogin) return;
-  //     try {
-  //       const response = await customAxios.get("/members/info");
-  //       console.log("login: ", response);
-  //       if (response.status === 200) {
-  //         setIsLogin(true);
-  //       }
-  //     } catch (error) {
-  //       console.error("login error: ", error);
-  //     }
-  //   };
-  //   checkLoginStatus();
-  // }, [isLogin]);
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      if (isLogin) return;
+      try {
+        const response = await customAxios.get("/members/info");
+        if (response.status === 200) {
+          setIsLogin(true);
+        }
+        console.log("로그인중");
+      } catch (error) {
+        console.error("login state error: ", error);
+      }
+    };
+    checkLoginStatus();
+  }, []);
 
   return (
     <>
@@ -82,7 +81,7 @@ function App() {
             element={<LoginScreen setIsLogin={setIsLogin} />}
           />
           <Route path="/profile" element={<ProfileScreen />} />
-          <Route path="/report" element={<ReportScreen />} />
+          <Route path="/myexp" element={<MyExpScreen />} />
         </Route>
         {/* <Route path="/login" element={<LoginScreen />} /> */}
       </Routes>

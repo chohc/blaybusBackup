@@ -22,9 +22,11 @@ const LoginScreen = ({ setIsLogin }) => {
 
   const handleLogin = async () => {
     try {
+      const fcmToken = localStorage.getItem("fcmToken");
+
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/auth/login`,
-        { loginId: input1, password: input2 },
+        { loginId: input1, password: input2, fcmToken: fcmToken },
         {
           withCredentials: true,
         }

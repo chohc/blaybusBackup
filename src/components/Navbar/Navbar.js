@@ -6,7 +6,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const allowedPaths = ["/", "/report", "/login", "/profile"];
+  const allowedPaths = ["/", "/myexp", "/login", "/profile"];
 
   // 현재 경로가 allowedPaths에 포함되지 않으면 null 반환
   if (!allowedPaths.includes(location.pathname)) {
@@ -68,13 +68,13 @@ export default function Navbar() {
 
       <div>
         <NavLink
-          to="/report"
+          to="/myexp"
           className={({ isActive }) =>
             isActive ? "nav-link active" : "nav-link"
           }
           onClick={(e) => {
             e.preventDefault();
-            handleNavigation("/report");
+            handleNavigation("/myexp");
           }}
         >
           경험치 현황

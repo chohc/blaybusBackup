@@ -27,7 +27,6 @@ export async function getFirebaseToken() {
     if (token) {
       localStorage.setItem("fcmToken", token);
       // setting(token);
-      console.log(token);
     } else {
       console.warn("알림 토큰을 가져올 수 없습니다.");
     }
@@ -37,7 +36,7 @@ export async function getFirebaseToken() {
 }
 
 // 서버로 FCM 토큰 전송
-const setting = (token) => {
+export const setting = (token) => {
   const customAxios = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
     withCredentials: true,
