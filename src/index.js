@@ -6,6 +6,20 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./fonts/font.css";
 
+// Service Worker 등록
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/firebase-messaging-sw.js")
+      .then((registration) => {
+        console.log("Service Worker 등록 완료:", registration);
+      })
+      .catch((error) => {
+        console.error("Service Worker 등록 실패:", error);
+      });
+  });
+}
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

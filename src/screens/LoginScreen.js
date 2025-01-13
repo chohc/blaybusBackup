@@ -4,8 +4,9 @@ import Logo from "../images/Logo.png";
 import colors from "../colors/colors";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
-const LoginScreen = () => {
+const LoginScreen = ({ setIsLogin }) => {
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
   const [focusedInput, setFocusedInput] = useState(null);
@@ -21,7 +22,6 @@ const LoginScreen = () => {
 
   const handleLogin = async () => {
     try {
-      console.log(input1, input2);
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/auth/login`,
         { loginId: input1, password: input2 },
@@ -29,14 +29,18 @@ const LoginScreen = () => {
           withCredentials: true,
         }
       );
-      console.log(response.message);
       if (response.status === 200) {
-        // alert("로그인 성공!");
-        navigate("/", { replace: true });
+        toast.success("로그인 성공!", {
+          duration: 1000,
+        });
+        console.log("로그인 성공");
+        setIsLogin(true);
+        setTimeout(() => navigate("/", { replace: true }), 0);
       }
     } catch (error) {
       console.log("로그인 POST 실패: ", error);
 
+      // 로그인 실패 UI
       setShowError(true);
       setFadeOut(false);
 
@@ -47,6 +51,23 @@ const LoginScreen = () => {
       setTimeout(() => {
         setShowError(false);
       }, 3500);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/auth/logout`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.status == 200) {
+        console.log("로그아웃 성공");
+      }
+    } catch (error) {
+      console.log("로그아웃 error: ", error);
     }
   };
 
@@ -112,6 +133,24 @@ const LoginScreen = () => {
           }}
         >
           로그인
+        </span>
+      </button>
+      <button
+        style={{
+          ...styles.button,
+          backgroundColor: colors.orange[500],
+          cursor: "pointer",
+        }}
+        onClick={handleLogout}
+      >
+        <span
+          className="title-3-bold"
+          style={{
+            color: "#FFFFFF",
+            fontSize: 18,
+          }}
+        >
+          로그아웃웃
         </span>
       </button>
       <div style={styles.linksContainer}>

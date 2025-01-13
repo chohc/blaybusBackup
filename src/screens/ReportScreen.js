@@ -1,12 +1,32 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../fonts/font.css";
 import colors from "../colors/colors";
 import { theme } from "../themes/theme";
 import Help from "../icons/help.svg";
 import PressableButton from "../components/PressableButton";
 import GradeChip from "../components/GradeChip";
+import GradeTableF from "../images/report/gradetable_f.png";
+import GradeTableB from "../images/report/gradetable_b.png";
+import GradeTableG from "../images/report/gradetable_g.png";
 
 const ReportScreen = () => {
+  const [tableVisible, setTableVisible] = useState(false);
+  const tableRef = useRef(null);
+
+  useEffect(() => {
+    // table 영역 외부 클릭 시 tableVisible을 false로 설정
+    const handleClickOutside = (event) => {
+      if (tableRef.current && !tableRef.current.contains(event.target)) {
+        setTableVisible(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   const ColorBar = ({ percent }) => {
     return (
       <div style={{ display: "flex", width: "100%" }}>
@@ -89,7 +109,9 @@ const ReportScreen = () => {
     );
   };
 
-  const LabelLevel = ({ index }) => {
+  const LabelLevel = ({ fullGrade, index }) => {
+    const grade = fullGrade.slice(0, 1);
+
     return (
       <div
         style={{
@@ -99,10 +121,18 @@ const ReportScreen = () => {
         }}
       >
         <span className="label-1-b" style={{ marginBottom: 4 }}>
-          {["F1", "F2", "F3", "F4", "F5"][index]}
+          {grade === "F"
+            ? ["F1", "F2", "F3", "F4", "F5"][index]
+            : grade === "B"
+            ? ["B1", "B2", "B3", "B4", "B5", "B6"][index]
+            : ["G1", "G2", "G3", "G4", "G5", "G6"][index]}
         </span>
         <span style={styles.subText}>
-          {["0", "27,000", "63,000", "108,000", "162,000"][index]}
+          {grade === "F"
+            ? ["0", "27,000", "63,000", "108,000", "162,000"][index]
+            : grade === "B"
+            ? ["0", "24,000", "52,000", "78,000", "117,000", "169,000"][index]
+            : ["0", "24,000", "52,000", "78,000", "117,000", "169,000"][index]}
         </span>
       </div>
     );
@@ -248,13 +278,34 @@ const ReportScreen = () => {
       <div style={{ ...theme.boxTheme.boxContainer, marginBottom: 29 }}>
         <div style={styles.subContainer}>
           <span className="Body-2-b">내 레벨</span>
-          <PressableButton
-            onClick={() => console.log("도움말 클릭")}
-            style={{ display: "flex", marginLeft: 8 }}
-            pressedStyle={{ opacity: 0.5 }}
+          <div
+            ref={tableRef}
+            style={{
+              display: "flex",
+              position: "relative",
+            }}
           >
-            <img src={Help} alt="icon" style={{ width: 20, height: 20 }} />
-          </PressableButton>
+            <PressableButton
+              onClick={() => setTableVisible(!tableVisible)}
+              style={{ display: "flex", marginLeft: 8 }}
+              pressedStyle={{ opacity: 0.5 }}
+            >
+              <img src={Help} alt="icon" style={{ width: 20, height: 20 }} />
+            </PressableButton>
+            {tableVisible && (
+              <img
+                src={GradeTableF}
+                alt="table"
+                style={{
+                  width: 218,
+                  position: "absolute",
+                  zIndex: 11,
+                  bottom: 14,
+                  left: -18,
+                }}
+              />
+            )}
+          </div>
         </div>
         <div
           style={{
@@ -288,8 +339,13 @@ const ReportScreen = () => {
             padding: "0px 0px 0px 6px",
           }}
         >
+          {/* {(grade.startsWith("F") ? [0, 1, 2, 3, 4] : [0, 1, 2, 3, 4, 5]).map(
+            (n) => (
+              <LabelLevel fullGrade="F1-I" index={n} />
+            )
+          )} */}
           {[0, 1, 2, 3, 4].map((n) => (
-            <LabelLevel index={n} />
+            <LabelLevel fullGrade="F1-I" index={n} />
           ))}
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../fonts/font.css";
 import colors from "../colors/colors";
 import Profile from "../images/profile/임시.png";
@@ -7,8 +7,24 @@ import GradeChip from "../components/GradeChip";
 import Arrow from "../icons/keyboard_arrow_right.svg";
 import PressableButton from "../components/PressableButton";
 import { theme } from "../themes/theme";
+import { useNavigate } from "react-router-dom";
+import { customAxios } from "../customAxios";
 
 const ProfileScreen = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadUserInfo = async () => {
+      try {
+        const response = await customAxios.get("/members/info");
+        console.log("GET memberinfo: ", response.data);
+      } catch (error) {
+        console.error("GET error: ", error);
+      }
+    };
+    loadUserInfo();
+  }, [navigate]);
+
   const Content = ({ text1, text2, isMargin }) => {
     return (
       <div
@@ -42,37 +58,46 @@ const ProfileScreen = () => {
         <div
           style={{
             ...theme.boxTheme.rowContainer,
-            justifyContent: "flex-start",
+            marginBottom: 12,
           }}
         >
-          <GradeChip text="F1-I" color={colors.Level.Bronze} />
-          <span className="subtitle-1-regular" style={{ marginLeft: 12 }}>
-            레벨업까지{" "}
-            <span
-              className="subtitle-1-bold"
-              style={{ color: colors.Level.Bronze }}
-            >
-              843do
-            </span>{" "}
-            남았어요!
-          </span>
-        </div>
-        <div
-          style={{
-            ...theme.boxTheme.rowContainer,
-            marginTop: 12,
-          }}
-        >
-          <div style={{ ...theme.boxTheme.barContainer, width: "82%" }}>
-            <div
-              style={{
-                ...theme.boxTheme.colorbar,
-                width: "85%",
-                backgroundColor: colors.Level.Bronze,
-              }}
-            />
+          <div style={styles.subContainer}>
+            <GradeChip text="F1 - I" color={colors.Level.Bronze} />
+            <span className="Body-2-b" style={{ marginLeft: 8 }}>
+              총 누적 경험치
+            </span>
           </div>
-          <span className="subtitle-1-bold">85%</span>
+          <div style={styles.subContainer}>
+            <span className="Body-2-b" style={{ color: colors.Level.Bronze }}>
+              12,657
+            </span>
+            <pre className="Body-2-b" style={{ color: colors.gray[600] }}>
+              {" "}
+              / 13,500do
+            </pre>
+          </div>
+        </div>
+        <div style={theme.boxTheme.barContainer}>
+          <div
+            style={{
+              ...theme.boxTheme.colorbar,
+              width: "85%",
+              backgroundColor: colors.Level.Bronze,
+            }}
+          />
+        </div>
+        <div style={{ ...theme.boxTheme.rowContainer, marginTop: 8 }}>
+          <span className="label-1-r">F1 - I</span>
+          <div style={styles.subContainer}>
+            <span className="label-1-b" style={{ color: colors.Level.Bronze }}>
+              863do
+            </span>
+            <pre className="label-1-r" style={{ color: colors.gray[600] }}>
+              {" "}
+              남았어요!
+            </pre>
+          </div>
+          <span className="label-1-r">F1 - II</span>
         </div>
       </div>
       <div style={theme.boxTheme.boxContainer}>
@@ -116,6 +141,7 @@ const styles = {
     backgroundColor: colors.Primary.bg,
     padding: "3px 20px",
   },
+  subContainer: { display: "flex", alignItems: "center" },
   head: {
     display: "flex",
     width: 108,
