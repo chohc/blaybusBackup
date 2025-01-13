@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
-import toast from "react-hot-toast";
-import axios from "axios";
+// import toast from "react-hot-toast";
+// import axios from "axios";
 
 // Firebase 초기화
 const firebaseConfig = {
@@ -36,23 +36,23 @@ export async function getFirebaseToken() {
 }
 
 // 서버로 FCM 토큰 전송
-export const setting = (token) => {
-  const customAxios = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
-    withCredentials: true,
-    timeout: 1000,
-  });
+// export const setting = (token) => {
+//   const customAxios = axios.create({
+//     baseURL: process.env.REACT_APP_API_URL,
+//     withCredentials: true,
+//     timeout: 1000,
+//   });
 
-  const body = { token };
+//   const body = { token };
 
-  customAxios
-    .post("/fcm", body)
-    .then((res) => {
-      toast.success("푸시 알림이 활성화되었습니다!", {
-        duration: 1000,
-      });
-    })
-    .catch((error) => {
-      console.error("서버로 FCM 토큰 전송 실패:", error);
-    });
-};
+//   customAxios
+//     .post("/fcm", body)
+//     .then((res) => {
+//       toast.success("푸시 알림이 활성화되었습니다!", {
+//         duration: 1000,
+//       });
+//     })
+//     .catch((error) => {
+//       console.error("서버로 FCM 토큰 전송 실패:", error);
+//     });
+// };
