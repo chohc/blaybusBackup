@@ -76,14 +76,13 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<h2>메인</h2>} />
-          <Route
-            path="/login"
-            element={<LoginScreen setIsLogin={setIsLogin} />}
-          />
           <Route path="/profile" element={<ProfileScreen />} />
           <Route path="/myexp" element={<MyExpScreen />} />
         </Route>
-        {/* <Route path="/login" element={<LoginScreen />} /> */}
+        <Route
+          path="/login"
+          element={<LoginScreen setIsLogin={setIsLogin} />}
+        />
       </Routes>
     </>
   );
