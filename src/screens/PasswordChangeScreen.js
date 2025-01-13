@@ -10,14 +10,24 @@ const PasswordChangeScreen = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [showError, setShowError] = useState(false);
-  const [fadeOut, setFadeOut] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const isButtonDisabled =
     !currentPassword || !newPassword || newPassword !== confirmPassword;
+
+  const commonInputContainerStyle = {
+    alignSelf: "stretch",
+    display: "flex",
+    alignItems: "center",
+    borderRadius: 8,
+    border: "1px solid #D1D3D8",
+    paddingLeft: 18,
+    paddingRight: 18,
+    marginLeft: 20,
+    marginRight: 20,
+  };
 
   const togglePasswordVisibility = (type) => {
     if (type === "current") {
@@ -29,25 +39,6 @@ const PasswordChangeScreen = () => {
     }
   };
 
-  const handlePasswordChange = () => {
-    if (currentPassword !== "correct_password") {
-      // 에러 처리
-      setShowError(true);
-      setFadeOut(false);
-
-      // 일정 시간 후 에러 텍스트 제거
-      setTimeout(() => {
-        setFadeOut(true);
-      }, 3000);
-
-      setTimeout(() => {
-        setShowError(false);
-      }, 3500);
-    } else {
-      alert("비밀번호가 변경되었습니다.");
-    }
-  };
-
   return (
     <div className="page" style={styles.container}>
       <div style={styles.headerContainer}>
@@ -55,7 +46,12 @@ const PasswordChangeScreen = () => {
         <span className="title-3-bold">비밀번호 변경</span>
       </div>
       <span style={styles.label}>{"현재 비밀번호"}</span>
-      <div style={styles.inputContainer}>
+      <div
+        style={{
+          ...commonInputContainerStyle,
+          marginBottom: 12,
+        }}
+      >
         <input
           type={showCurrentPassword ? "text" : "password"}
           placeholder={"현재 비밀번호"}
@@ -71,7 +67,12 @@ const PasswordChangeScreen = () => {
         />
       </div>
       <span style={styles.label}>{"새 비밀번호"}</span>
-      <div style={styles.inputContainer}>
+      <div
+        style={{
+          ...commonInputContainerStyle,
+          marginBottom: 12,
+        }}
+      >
         <input
           type={showNewPassword ? "text" : "password"}
           placeholder={"새 비밀번호"}
@@ -86,7 +87,12 @@ const PasswordChangeScreen = () => {
           onClick={() => togglePasswordVisibility("new")}
         />
       </div>
-      <div style={styles.inputContainer}>
+      <div
+        style={{
+          ...commonInputContainerStyle,
+          marginBottom: 24,
+        }}
+      >
         <input
           type={showConfirmPassword ? "text" : "password"}
           placeholder={"새 비밀번호 확인"}
@@ -103,12 +109,12 @@ const PasswordChangeScreen = () => {
       </div>
       <button
         style={isButtonDisabled ? styles.disabledButton : styles.button}
-        onClick={handlePasswordChange}
+        onClick={() => alert("비밀번호가 변경되었습니다.")}
         disabled={isButtonDisabled}
       >
         <span
           style={{
-            color: isButtonDisabled ? colors.gray[500] : "#FFFFFF",
+            color: isButtonDisabled ? colors.gray[500] : "#FFFFFF", // 텍스트 색상 동적 설정
             fontSize: 18,
             fontWeight: "bold",
           }}
@@ -116,18 +122,6 @@ const PasswordChangeScreen = () => {
           {"비밀번호 변경"}
         </span>
       </button>
-      {showError && (
-        <div
-          style={{
-            ...styles.errorBox,
-            opacity: fadeOut ? 0 : 1,
-            visibility: fadeOut ? "hidden" : "visible",
-            transition: "opacity 0.5s ease-out, visibility 0.5s ease-out",
-          }}
-        >
-          <span style={styles.errorText}>현재 비밀번호를 다시 확인해주세요.</span>
-        </div>
-      )}
     </div>
   );
 };
@@ -162,17 +156,6 @@ const styles = {
     marginLeft: 21,
     marginTop: 12,
   },
-  inputContainer: {
-    alignSelf: "stretch",
-    display: "flex",
-    alignItems: "center",
-    borderRadius: 8,
-    border: "1px solid #D1D3D8",
-    paddingLeft: 18,
-    paddingRight: 18,
-    marginLeft: 20,
-    marginRight: 20,
-  },
   input: {
     color: colors.gray[600],
     fontSize: 16,
@@ -200,7 +183,7 @@ const styles = {
     border: "none",
     paddingTop: 18,
     paddingBottom: 18,
-    marginBottom: 20,
+    marginBottom: 50,
     marginLeft: 20,
     marginRight: 20,
     textAlign: "left",
@@ -215,28 +198,10 @@ const styles = {
     border: "none",
     paddingTop: 18,
     paddingBottom: 18,
-    marginBottom: 20,
+    marginBottom: 50,
     marginLeft: 20,
     marginRight: 20,
     textAlign: "left",
-  },
-  // errorBox: {
-  //   marginTop: -10,
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   flexDirection: "column",
-  //   background: "#FEEDEF",
-  //   borderRadius: 8,
-  //   border: "none",
-  //   width: "calc(100% - 40px)",
-  //   padding: "8px 16px",
-  //   textAlign: "center",
-  //   marginLeft: 20,
-  // },
-  errorText: {
-    color: "#ED4956",
-    fontSize: 14,
   },
 };
 
