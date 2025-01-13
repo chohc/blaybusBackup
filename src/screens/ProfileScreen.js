@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../fonts/font.css";
 import colors from "../colors/colors";
 import Profile from "../images/profile/임시.png";
@@ -9,9 +9,11 @@ import PressableButton from "../components/PressableButton";
 import { theme } from "../themes/theme";
 import { useNavigate } from "react-router-dom";
 import { customAxios } from "../customAxios";
+import Modal from "../components/Modal/Modal";
 
 const ProfileScreen = () => {
   const navigate = useNavigate();
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const loadUserInfo = async () => {
@@ -23,7 +25,7 @@ const ProfileScreen = () => {
       }
     };
     loadUserInfo();
-  }, [navigate]);
+  }, []);
 
   const Content = ({ text1, text2, isMargin }) => {
     return (
@@ -47,7 +49,7 @@ const ProfileScreen = () => {
       <div style={styles.circle}>
         <img src={Profile} alt="이미지" style={styles.image} />
         <PressableButton
-          onClick={() => console.log("설정 클릭")}
+          onClick={() => setModalVisible(!modalVisible)}
           style={styles.miniCircle}
           pressedStyle={{ backgroundColor: colors.gray[100] }}
         >
@@ -127,6 +129,7 @@ const ProfileScreen = () => {
           </PressableButton>
         </div>
       </div>
+      <Modal visible={modalVisible} onClose={() => setModalVisible(false)} />
     </div>
   );
 };

@@ -297,7 +297,7 @@ const ReportScreen = () => {
                 src={GradeTableF}
                 alt="table"
                 style={{
-                  width: 218,
+                  width: 220,
                   position: "absolute",
                   zIndex: 11,
                   bottom: 14,
