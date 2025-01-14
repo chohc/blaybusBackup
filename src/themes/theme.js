@@ -11,6 +11,7 @@ export const theme = {
       backgroundColor: colors.Primary.bg,
       padding: "3px 20px",
     },
+    
     head: {
       display: "flex",
       width: 108,
@@ -52,6 +53,29 @@ export const theme = {
       borderRadius: 25,
       position: "absolute",
       left: 0,
+    },
+  },
+  noticeTheme: {
+    container: {
+      display: "flex",
+      flexDirection: "column",
+      minHeight: "100vh",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      backgroundColor: "#FFF",
+      padding: "45px 0px 0px 0px",
+    },
+    header: {
+      display: "flex",
+      height: 48,
+      alignItems: "center",
+      justifyContent: "center",
+      width: "100%",
+      padding: "3px 16px 0px 16px",
+      position: "fixed",
+      top: 0,
+      zIndex: 1000,
+      backgroundColor: colors.Primary.bg,
     },
   },
 };
