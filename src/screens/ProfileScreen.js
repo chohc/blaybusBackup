@@ -100,7 +100,14 @@ const ProfileScreen = () => {
           }}
         >
           <div style={styles.subContainer}>
-            <LevelChip text={levelName} color={colors.Level.Bronze} />
+            <LevelChip
+              text={
+                levelName.length > 3
+                  ? `${levelName.slice(0, 2)} - ${levelName.slice(3)}`
+                  : levelName
+              }
+              color={colors.Level.Bronze}
+            />
             <span className="Body-2-b" style={{ marginLeft: 8 }}>
               총 누적 경험치
             </span>
