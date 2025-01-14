@@ -8,6 +8,8 @@ import MyExpScreen from "./screens/MyExpScreen";
 import { getFirebaseToken } from "./FCM";
 import { Toaster } from "react-hot-toast";
 import { setupInterceptors, customAxios } from "./customAxios";
+import PasswordChangeScreen from "./screens/PasswordChangeScreen";
+
 import NoticeDetailScreen from "./screens/notice/NoticeDetailScreen";
 import NoticeScreen from "./screens/notice/NoticeScreen";
 
@@ -82,6 +84,8 @@ function App() {
           <Route path="/notice" element={<NoticeScreen />} />
           <Route path="/notice-detail" element={<NoticeDetailScreen />} />
           <Route path="/profile" element={<ProfileScreen />} />
+          <Route path="/myexp" element={<MyExpScreen />} />
+          <Route path="/passwordchange" element={<PasswordChangeScreen />} />
         </Route>
         <Route
           path="/login"

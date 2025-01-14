@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../fonts/font.css";
 import colors from "../colors/colors";
 import Profile from "../images/profile/임시.png";
@@ -12,6 +13,7 @@ import Modal from "../components/Modal/Modal";
 import { getTotalExpInfo } from "../CalcEx";
 
 const ProfileScreen = () => {
+  const navigate = useNavigate();
   const [modalVisible, setModalVisible] = useState(false);
 
   const [employeeNumber, setEmployeeNumber] = useState("");
@@ -170,7 +172,7 @@ const ProfileScreen = () => {
         <div style={theme.boxTheme.rowContainer}>
           <span className="subtitle-1-bold">비밀번호 변경</span>
           <PressableButton
-            onClick={() => console.log("비밀번호 변경 클릭")}
+            onClick={() => navigate("/passwordchange")}
             pressedStyle={{ opacity: 0.5 }}
           >
             <img src={Arrow} alt="arrow" />

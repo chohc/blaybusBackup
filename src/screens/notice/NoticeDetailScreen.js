@@ -13,17 +13,12 @@ const NoticeDetailScreen = () => {
   const { title, content, date } = location.state || {};
 
   return (
-    <div
-      className="page"
-      style={{ ...theme.pinkPage.container, padding: "3px 0px 0px 0px" }}
-    >
+    <div className="page" style={theme.noticeTheme.container}>
       {/* header */}
       <div
         style={{
-          ...theme.pinkPage.head,
-          width: "100%",
+          ...theme.noticeTheme.header,
           justifyContent: "space-between",
-          padding: "0px 16px",
         }}
       >
         <PressableButton
