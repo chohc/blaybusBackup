@@ -2,19 +2,25 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../fonts/font.css";
 import colors from "../colors/colors";
-import Profile from "../images/profile/임시.png";
 import Setting from "../images/profile/settings.svg";
 import LevelChip from "../components/LevelChip";
 import Arrow from "../icons/keyboard_arrow_right.svg";
 import PressableButton from "../components/PressableButton";
 import { theme } from "../themes/theme";
 import { customAxios } from "../customAxios";
-import Modal from "../components/Modal/Modal";
 import { getTotalExpInfo } from "../CalcEx";
 
 const ProfileScreen = () => {
   const navigate = useNavigate();
-  const [modalVisible, setModalVisible] = useState(false);
+
+  const profiles = {
+    default: require("../images/profile/character/profile_default.png"),
+    flower: require("../images/profile/character/profile_flower.png"),
+    cloud: require("../images/profile/character/profile_cloud.png"),
+    music: require("../images/profile/character/profile_music.png"),
+    heart: require("../images/profile/character/profile_heart.png"),
+    star: require("../images/profile/character/profile_star.png"),
+  };
 
   const [employeeNumber, setEmployeeNumber] = useState("");
   const [name, setName] = useState("");
@@ -28,6 +34,8 @@ const ProfileScreen = () => {
   useEffect(() => {
     const loadUserInfo = async () => {
       try {
+        if (employeeNumber) return;
+
         const { data } = await customAxios.get("/members/info");
         console.log("GET memberinfo: ", data);
 
@@ -44,7 +52,7 @@ const ProfileScreen = () => {
         console.error("GET error: ", error);
       }
     };
-    loadUserInfo();
+    //loadUserInfo();
   }, []);
 
   const formatHireDate = (dateString) => {
@@ -84,9 +92,11 @@ const ProfileScreen = () => {
         <span className="title-3-bold">프로필</span>
       </div>
       <div style={styles.circle}>
-        <img src={Profile} alt="이미지" style={styles.image} />
+        <img src={profiles.default} alt="이미지" style={styles.image} />
         <PressableButton
-          onClick={() => setModalVisible(!modalVisible)}
+          onClick={() => {
+            navigate("/profile/setting");
+          }}
           style={styles.miniCircle}
           pressedStyle={{ backgroundColor: colors.gray[100] }}
         >
@@ -178,8 +188,17 @@ const ProfileScreen = () => {
             <img src={Arrow} alt="arrow" />
           </PressableButton>
         </div>
+        <div style={theme.boxTheme.rowContainer}>
+          <span className="subtitle-1-bold">알림 화면</span>
+          <PressableButton
+            onClick={() => navigate("/notification")}
+            pressedStyle={{ opacity: 0.5 }}
+            style={{ marginTop: 24 }}
+          >
+            <img src={Arrow} alt="arrow" />
+          </PressableButton>
+        </div>
       </div>
-      <Modal visible={modalVisible} onClose={() => setModalVisible(false)} />
     </div>
   );
 };

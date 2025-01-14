@@ -17,7 +17,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const allowedPaths = ["/", "/myexp", "/notice", "/notice-detail", "/profile"];
+  const allowedPaths = ["/", "/myexp", "/notice", "/notice/detail", "/profile"];
 
   // 현재 경로가 allowedPaths에 포함되지 않으면 null 반환
   if (!allowedPaths.includes(location.pathname)) {
@@ -108,7 +108,7 @@ export default function Navbar() {
             src={
               location.pathname === "/notice"
                 ? NoticeOrange
-                : location.pathname === "/notice-detail"
+                : location.pathname === "/notice/detail"
                 ? NoticeOrange
                 : NoticeGray
             }
@@ -117,7 +117,7 @@ export default function Navbar() {
           <span
             style={{
               color:
-                location.pathname === "/notice-detail" && colors.orange[500],
+                location.pathname === "/notice/detail" && colors.orange[500],
               fontWeight: 700,
             }}
           >

@@ -11,7 +11,7 @@ export const theme = {
       backgroundColor: colors.Primary.bg,
       padding: "3px 20px",
     },
-    
+
     head: {
       display: "flex",
       width: 108,
@@ -67,6 +67,7 @@ export const theme = {
     },
     header: {
       display: "flex",
+      maxWidth: 420,
       height: 48,
       alignItems: "center",
       justifyContent: "center",

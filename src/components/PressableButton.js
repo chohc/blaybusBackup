@@ -5,11 +5,13 @@ const PressableButton = ({
   onClick,
   style,
   pressedStyle,
+  disabled = false,
   ...props
 }) => {
   const [isPressed, setIsPressed] = useState(false);
 
   const handlePress = (event) => {
+    if (disabled) return;
     if (event.type === "mousedown" || event.type === "touchstart") {
       setIsPressed(true);
     } else if (
@@ -31,11 +33,15 @@ const PressableButton = ({
       onClick={onClick}
       style={{
         ...style,
-        ...{ cursor: "pointer", WebkitTapHighlightColor: "transparent" },
+        ...{
+          cursor: disabled ? "not-allowed" : "pointer",
+          WebkitTapHighlightColor: "transparent",
+        },
         ...(isPressed ? pressedStyle : {}),
       }}
       role="button"
       aria-pressed={isPressed}
+      aria-disabled={disabled}
       {...props}
     >
       {children}
