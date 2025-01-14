@@ -22,7 +22,7 @@ const NoticeScreen = () => {
             500do를 드립니다."
           date="2025.01.17"
           onClick={() => {
-            navigate("/notice-detail", {
+            navigate("/notice/detail", {
               state: {
                 title: "AAA 프로젝트 신설 (경험치 500 do, 신청 마감 ~10/31)",
                 content:

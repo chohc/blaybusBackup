@@ -47,7 +47,7 @@ const PasswordChangeScreen = () => {
 
   const handleChangePassword = async () => {
     try {
-      const response = await customAxios.put("/update-pw", {
+      const response = await customAxios.put("/members/update-pw", {
         oldPassword: currentPassword,
         newPassword: newPassword,
       });

@@ -9,9 +9,10 @@ import { getFirebaseToken } from "./FCM";
 import { Toaster } from "react-hot-toast";
 import { setupInterceptors, customAxios } from "./customAxios";
 import PasswordChangeScreen from "./screens/PasswordChangeScreen";
-
 import NoticeDetailScreen from "./screens/notice/NoticeDetailScreen";
 import NoticeScreen from "./screens/notice/NoticeScreen";
+import ProfileSettingScreen from "./screens/ProfileSettingScreen";
+import NotificationScreen from "./screens/NotificationScreen";
 
 const Layout = () => (
   <div className="page">
@@ -76,13 +77,13 @@ function App() {
 
   return (
     <>
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<h2>메인</h2>} />
           <Route path="/myexp" element={<MyExpScreen />} />
           <Route path="/notice" element={<NoticeScreen />} />
-          <Route path="/notice-detail" element={<NoticeDetailScreen />} />
+          <Route path="/notice/detail" element={<NoticeDetailScreen />} />
           <Route path="/profile" element={<ProfileScreen />} />
           <Route path="/myexp" element={<MyExpScreen />} />
           <Route path="/passwordchange" element={<PasswordChangeScreen />} />
@@ -91,6 +92,8 @@ function App() {
           path="/login"
           element={<LoginScreen setIsLogin={setIsLogin} />}
         />
+        <Route path="/profile/setting" element={<ProfileSettingScreen />} />
+        <Route path="/notification" element={<NotificationScreen />} />
       </Routes>
     </>
   );
