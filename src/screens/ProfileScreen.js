@@ -102,7 +102,14 @@ const ProfileScreen = () => {
           }}
         >
           <div style={styles.subContainer}>
-            <LevelChip text={levelName} color={colors.Level.Bronze} />
+            <LevelChip
+              text={
+                levelName.length > 3
+                  ? `${levelName.slice(0, 2)} - ${levelName.slice(3)}`
+                  : levelName
+              }
+              color={colors.Level.Bronze}
+            />
             <span className="Body-2-b" style={{ marginLeft: 8 }}>
               총 누적 경험치
             </span>
@@ -112,7 +119,8 @@ const ProfileScreen = () => {
               {totalExperience.toLocaleString()}
             </span>
             <pre className="Body-2-b" style={{ color: colors.gray[600] }}>
-              {" "}/ {nextLevelExp.toLocaleString()}do
+              {" "}
+              / {nextLevelExp.toLocaleString()}do
             </pre>
           </div>
         </div>
@@ -132,7 +140,8 @@ const ProfileScreen = () => {
               {`${remainExp.toLocaleString()}do`}
             </span>
             <pre className="label-1-r" style={{ color: colors.gray[600] }}>
-              {" "}남았어요!
+              {" "}
+              남았어요!
             </pre>
           </div>
           <span className="label-1-r">{nextLevel}</span>

@@ -5,8 +5,14 @@ import visibility from "../images/visibility.png";
 import visibilityoff from "../images/visibility_off.png";
 import colors from "../colors/colors";
 import "../fonts/font.css";
+import { customAxios } from "../customAxios";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import PressableButton from "../components/PressableButton";
 
 const PasswordChangeScreen = () => {
+  const navigate = useNavigate();
+
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -39,10 +45,31 @@ const PasswordChangeScreen = () => {
     }
   };
 
+  const handleChangePassword = async () => {
+    try {
+      const response = await customAxios.put("/update-pw", {
+        oldPassword: currentPassword,
+        newPassword: newPassword,
+      });
+      console.log("비밀번호변경: ", response);
+      navigate(-1);
+      toast.success("비밀번호 변경 완료!", {
+        duration: 1000,
+      });
+    } catch (error) {
+      console.warn("비밀번호변경", error);
+    }
+  };
+
   return (
     <div className="page" style={styles.container}>
       <div style={styles.headerContainer}>
-        <img src={arrowback} style={styles.arrowback} alt="arrowback" />
+        <PressableButton
+          onClick={() => navigate(-1)}
+          pressedStyle={{ opacity: 0.5 }}
+        >
+          <img src={arrowback} style={styles.arrowback} alt="arrowback" />
+        </PressableButton>
         <span className="title-3-bold">비밀번호 변경</span>
       </div>
       <span style={styles.label}>{"현재 비밀번호"}</span>
@@ -109,7 +136,7 @@ const PasswordChangeScreen = () => {
       </div>
       <button
         style={isButtonDisabled ? styles.disabledButton : styles.button}
-        onClick={() => alert("비밀번호가 변경되었습니다.")}
+        onClick={handleChangePassword}
         disabled={isButtonDisabled}
       >
         <span
@@ -137,7 +164,7 @@ const styles = {
     alignItems: "center",
     marginLeft: 30,
     marginRight: 17,
-    marginTop: 47,
+    marginTop: 3,
     width: 390,
     height: 45,
     marginBottom: 5,

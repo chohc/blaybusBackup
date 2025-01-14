@@ -10,6 +10,8 @@ import { Toaster } from "react-hot-toast";
 import { setupInterceptors, customAxios } from "./customAxios";
 import PasswordChangeScreen from "./screens/PasswordChangeScreen";
 
+import NoticeDetailScreen from "./screens/notice/NoticeDetailScreen";
+import NoticeScreen from "./screens/notice/NoticeScreen";
 
 const Layout = () => (
   <div className="page">
@@ -78,6 +80,9 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<h2>메인</h2>} />
+          <Route path="/myexp" element={<MyExpScreen />} />
+          <Route path="/notice" element={<NoticeScreen />} />
+          <Route path="/notice-detail" element={<NoticeDetailScreen />} />
           <Route path="/profile" element={<ProfileScreen />} />
           <Route path="/myexp" element={<MyExpScreen />} />
           <Route path="/passwordchange" element={<PasswordChangeScreen />} />

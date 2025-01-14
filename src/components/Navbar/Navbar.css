@@ -18,14 +18,15 @@
 
   div {
     .nav-link {
-      color: rgb(200, 200, 200);
-      font-size: 20px;
-      font-weight: 700;
+      color: #868b94;
+      font-size: 12px;
+      font-weight: 400;
       font-family: "Pretendard";
     }
 
     .active {
-      color: #736cbd;
+      color: #ff5c35;
+      font-weight: 700;
     }
   }
 }

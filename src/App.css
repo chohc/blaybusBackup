@@ -29,7 +29,7 @@ input {
 
 body,
 html {
-  background-color: gainsboro;
+  background-color: #fff;
   overflow-x: hidden;
   font-family: "Mooli", sans-serif;
 }
