@@ -11,6 +11,7 @@ export const theme = {
       backgroundColor: colors.Primary.bg,
       padding: "3px 20px",
     },
+    
     head: {
       display: "flex",
       width: 108,

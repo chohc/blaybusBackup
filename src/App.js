@@ -9,7 +9,7 @@ import { getFirebaseToken } from "./FCM";
 import { Toaster } from "react-hot-toast";
 import { setupInterceptors, customAxios } from "./customAxios";
 import PasswordChangeScreen from "./screens/PasswordChangeScreen";
-
+import Home from "./screens/HomeScreen";
 import NoticeDetailScreen from "./screens/notice/NoticeDetailScreen";
 import NoticeScreen from "./screens/notice/NoticeScreen";
 
@@ -37,7 +37,7 @@ function App() {
       if (Notification.permission !== "granted") {
         const permission = await Notification.requestPermission();
         if (permission === "granted") {
-          await getFirebaseToken(); // FCM 토큰 가져오기
+          await getFirebaseToken();
         } else {
           console.warn("알림 권한이 거부되었습니다.");
           alert(
@@ -53,7 +53,7 @@ function App() {
   }, []);
 
   // Interceptor 초기화
-  React.useEffect(() => {
+  useEffect(() => {
     setupInterceptors(navigate);
   }, [navigate]);
 
@@ -72,19 +72,18 @@ function App() {
       }
     };
     checkLoginStatus();
-  }, []);
+  }, [isLogin]);
 
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<h2>메인</h2>} />
+          <Route path="/" element={<Home />} />
           <Route path="/myexp" element={<MyExpScreen />} />
           <Route path="/notice" element={<NoticeScreen />} />
           <Route path="/notice-detail" element={<NoticeDetailScreen />} />
           <Route path="/profile" element={<ProfileScreen />} />
-          <Route path="/myexp" element={<MyExpScreen />} />
           <Route path="/passwordchange" element={<PasswordChangeScreen />} />
         </Route>
         <Route
