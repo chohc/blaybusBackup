@@ -27,6 +27,7 @@ const PasswordChangeScreen = () => {
     paddingRight: 18,
     marginLeft: 20,
     marginRight: 20,
+    
   };
 
   const togglePasswordVisibility = (type) => {

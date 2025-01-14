@@ -1,41 +1,51 @@
 import React, { useState } from "react";
 import "../App.css";
-import arrowback from "../images/arrow_back.png";
-import visibility from "../images/visibility.png";
-import visibilityoff from "../images/visibility_off.png";
+import Logo from "../images/Logo.png";
 import colors from "../colors/colors";
-import "../fonts/font.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
-const PasswordChangeScreen = () => {
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+const LoginScreen = ({ setIsLogin }) => {
+  const [input1, setInput1] = useState("");
+  const [input2, setInput2] = useState("");
+  const [focusedInput, setFocusedInput] = useState(null);
   const [showError, setShowError] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
-  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const isButtonDisabled =
-    !currentPassword || !newPassword || newPassword !== confirmPassword;
+  const navigate = useNavigate();
 
-  const togglePasswordVisibility = (type) => {
-    if (type === "current") {
-      setShowCurrentPassword(!showCurrentPassword);
-    } else if (type === "new") {
-      setShowNewPassword(!showNewPassword);
-    } else if (type === "confirm") {
-      setShowConfirmPassword(!showConfirmPassword);
-    }
-  };
+  const onChangeInput1 = (value) => setInput1(value);
+  const onChangeInput2 = (value) => setInput2(value);
 
-  const handlePasswordChange = () => {
-    if (currentPassword !== "correct_password") {
-      // 에러 처리
+  const isButtonDisabled = !input1 || !input2;
+
+  const handleLogin = async () => {
+    try {
+      const fcmToken = localStorage.getItem("fcmToken");
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/auth/login`,
+        { loginId: input1, password: input2, fcmToken: fcmToken },
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.status === 200) {
+        toast.success("로그인 성공!", {
+          duration: 1000,
+        });
+        console.log("로그인 성공");
+        setIsLogin(true);
+        setTimeout(() => navigate("/", { replace: true }), 0);
+      }
+    } catch (error) {
+      console.log("로그인 POST 실패: ", error);
+
+      // 로그인 실패 UI
       setShowError(true);
       setFadeOut(false);
 
-      // 일정 시간 후 에러 텍스트 제거
       setTimeout(() => {
         setFadeOut(true);
       }, 3000);
@@ -43,79 +53,11 @@ const PasswordChangeScreen = () => {
       setTimeout(() => {
         setShowError(false);
       }, 3500);
-    } else {
-      alert("비밀번호가 변경되었습니다.");
     }
   };
 
   return (
     <div className="page" style={styles.container}>
-      <div style={styles.headerContainer}>
-        <img src={arrowback} style={styles.arrowback} alt="arrowback" />
-        <span className="title-3-bold">비밀번호 변경</span>
-      </div>
-      <span style={styles.label}>{"현재 비밀번호"}</span>
-      <div style={styles.inputContainer}>
-        <input
-          type={showCurrentPassword ? "text" : "password"}
-          placeholder={"현재 비밀번호"}
-          value={currentPassword}
-          onChange={(event) => setCurrentPassword(event.target.value)}
-          style={styles.input}
-        />
-        <img
-          src={showCurrentPassword ? visibilityoff : visibility}
-          style={styles.eyeIcon}
-          alt="Eye Icon"
-          onClick={() => togglePasswordVisibility("current")}
-        />
-      </div>
-      <span style={styles.label}>{"새 비밀번호"}</span>
-      <div style={styles.inputContainer}>
-        <input
-          type={showNewPassword ? "text" : "password"}
-          placeholder={"새 비밀번호"}
-          value={newPassword}
-          onChange={(event) => setNewPassword(event.target.value)}
-          style={styles.input}
-        />
-        <img
-          src={showNewPassword ? visibilityoff : visibility}
-          style={styles.eyeIcon}
-          alt="Eye Icon"
-          onClick={() => togglePasswordVisibility("new")}
-        />
-      </div>
-      <div style={styles.inputContainer}>
-        <input
-          type={showConfirmPassword ? "text" : "password"}
-          placeholder={"새 비밀번호 확인"}
-          value={confirmPassword}
-          onChange={(event) => setConfirmPassword(event.target.value)}
-          style={styles.input}
-        />
-        <img
-          src={showConfirmPassword ? visibilityoff : visibility}
-          style={styles.eyeIcon}
-          alt="Eye Icon"
-          onClick={() => togglePasswordVisibility("confirm")}
-        />
-      </div>
-      <button
-        style={isButtonDisabled ? styles.disabledButton : styles.button}
-        onClick={handlePasswordChange}
-        disabled={isButtonDisabled}
-      >
-        <span
-          style={{
-            color: isButtonDisabled ? colors.gray[500] : "#FFFFFF",
-            fontSize: 18,
-            fontWeight: "bold",
-          }}
-        >
-          {"비밀번호 변경"}
-        </span>
-      </button>
       {showError && (
         <div
           style={{
@@ -125,9 +67,65 @@ const PasswordChangeScreen = () => {
             transition: "opacity 0.5s ease-out, visibility 0.5s ease-out",
           }}
         >
-          <span style={styles.errorText}>현재 비밀번호를 다시 확인해주세요.</span>
+          <span style={styles.errorText}>
+            아이디 또는 비밀번호를 다시 확인해주세요.
+          </span>
         </div>
       )}
+      <img src={Logo} alt="Logo" style={styles.logo} />
+      <input
+        className="Body-1-r"
+        placeholder={"아이디"}
+        value={input1}
+        onChange={(event) => onChangeInput1(event.target.value)}
+        onFocus={() => setFocusedInput("input1")}
+        onBlur={() => setFocusedInput(null)}
+        style={{
+          ...styles.input,
+          borderColor: focusedInput === "input1" ? "black" : colors.gray[400],
+        }}
+      />
+      <input
+        type="password"
+        className="Body-1-r"
+        placeholder={"비밀번호"}
+        value={input2}
+        onChange={(event) => onChangeInput2(event.target.value)}
+        onFocus={() => setFocusedInput("input2")}
+        onBlur={() => setFocusedInput(null)}
+        style={{
+          ...styles.input,
+          ...styles.passwordInput,
+          borderColor: focusedInput === "input2" ? "black" : colors.gray[400],
+        }}
+      />
+      <button
+        style={{
+          ...styles.button,
+          backgroundColor: isButtonDisabled
+            ? colors.gray[300]
+            : colors.orange[500],
+          cursor: isButtonDisabled ? "not-allowed" : "pointer",
+        }}
+        onClick={handleLogin}
+        disabled={isButtonDisabled}
+      >
+        <span
+          className="title-3-bold"
+          style={{
+            color: isButtonDisabled ? colors.gray[500] : "#FFFFFF",
+            fontSize: 18,
+          }}
+        >
+          로그인
+        </span>
+      </button>
+      <div style={styles.linksContainer}>
+        <span style={styles.link}>아이디 찾기</span>
+
+        <div style={styles.divider} />
+        <span style={styles.link}>비밀번호 찾기</span>
+      </div>
     </div>
   );
 };
@@ -135,109 +133,79 @@ const PasswordChangeScreen = () => {
 const styles = {
   container: {
     display: "flex",
-    alignItems: "flex-start",
-  },
-  headerContainer: {
-    alignSelf: "stretch",
-    display: "flex",
+    flexDirection: "column",
+    paddingTop: 204,
+    height: "100vh",
+    justifyContent: "flex-start",
     alignItems: "center",
-    marginLeft: 30,
-    marginRight: 17,
-    marginTop: 47,
-    width: 390,
-    height: 45,
-    marginBottom: 5,
   },
-  arrowback: {
-    width: 10,
-    height: 18,
-    marginRight: 107,
-    objectFit: "fill",
-  },
-  label: {
-    color: colors.gray[900],
-    fontSize: 14,
-    fontWeight: 700,
-    marginBottom: 15,
-    marginLeft: 21,
-    marginTop: 12,
-  },
-  inputContainer: {
-    alignSelf: "stretch",
-    display: "flex",
-    alignItems: "center",
-    borderRadius: 8,
-    border: "1px solid #D1D3D8",
-    paddingLeft: 18,
-    paddingRight: 18,
-    marginLeft: 20,
-    marginRight: 20,
+  logo: {
+    height: 30,
+    marginBottom: 44,
   },
   input: {
-    color: colors.gray[600],
-    fontSize: 16,
-    marginRight: 4,
-    flex: 1,
-    alignSelf: "stretch",
-    background: "none",
-    border: "none",
-    paddingTop: 13,
-    paddingBottom: 13,
+    color: colors.gray[900],
+    marginBottom: 16,
+    width: "calc(100% - 40px)",
+    maxWidth: 400,
+    borderRadius: 8,
+    border: "1px solid",
+    padding: 18,
+    outline: "none",
+    transition: "border-color 0.3s",
   },
-  eyeIcon: {
-    width: 24,
-    height: 24,
-    objectFit: "fill",
-    cursor: "pointer",
+  passwordInput: {
+    marginBottom: 24,
   },
   button: {
-    alignSelf: "stretch",
     display: "flex",
-    flexDirection: "column",
+    justifyContent: "center",
     alignItems: "center",
-    background: colors.orange[500],
     borderRadius: 8,
     border: "none",
     paddingTop: 18,
     paddingBottom: 18,
-    marginBottom: 20,
-    marginLeft: 20,
-    marginRight: 20,
-    textAlign: "left",
+    marginBottom: 26,
+    width: "calc(100% - 40px)",
+    maxWidth: 400,
+    textAlign: "center",
   },
-  disabledButton: {
-    alignSelf: "stretch",
+  linksContainer: {
     display: "flex",
-    flexDirection: "column",
+    justifyContent: "space-between",
     alignItems: "center",
-    background: colors.gray[300],
+    width: "calc(100% - 130px)",
+    maxWidth: 270,
+    marginBottom: 318,
+  },
+  link: {
+    fontSize: 14,
+    cursor: "pointer",
+    background: "#FFFFFF",
+  },
+  divider: {
+    width: 1,
+    height: 9,
+    backgroundColor: colors.gray[400],
+  },
+  errorBox: {
+    position: "absolute",
+    top: 133,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    background: "#ED49561A",
     borderRadius: 8,
     border: "none",
-    paddingTop: 18,
-    paddingBottom: 18,
-    marginBottom: 20,
-    marginLeft: 20,
-    marginRight: 20,
+    width: 350,
+    padding: "8px 16px",
     textAlign: "left",
   },
-  // errorBox: {
-  //   marginTop: -10,
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   flexDirection: "column",
-  //   background: "#FEEDEF",
-  //   borderRadius: 8,
-  //   border: "none",
-  //   width: "calc(100% - 40px)",
-  //   padding: "8px 16px",
-  //   textAlign: "center",
-  //   marginLeft: 20,
-  // },
   errorText: {
     color: "#ED4956",
     fontSize: 14,
   },
 };
 
-export default PasswordChangeScreen;
+export default LoginScreen;
