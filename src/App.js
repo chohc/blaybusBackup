@@ -14,6 +14,7 @@ import NoticeDetailScreen from "./screens/notice/NoticeDetailScreen";
 import NoticeScreen from "./screens/notice/NoticeScreen";
 import ProfileSettingScreen from "./screens/ProfileSettingScreen";
 import NotificationScreen from "./screens/NotificationScreen";
+import { AliveScope, KeepAlive } from "react-activation";
 
 const Layout = () => (
   <div className="page">
@@ -79,22 +80,31 @@ function App() {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/myexp" element={<MyExpScreen />} />
-          <Route path="/notice" element={<NoticeScreen />} />
-          <Route path="/notice/detail" element={<NoticeDetailScreen />} />
-          <Route path="/profile" element={<ProfileScreen />} />
-          <Route path="/passwordchange" element={<PasswordChangeScreen />} />
-        </Route>
-        <Route
-          path="/login"
-          element={<LoginScreen setIsLogin={setIsLogin} />}
-        />
-        <Route path="/profile/setting" element={<ProfileSettingScreen />} />
-        <Route path="/notification" element={<NotificationScreen />} />
-      </Routes>
+      <AliveScope>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/myexp" element={<MyExpScreen />} />
+            <Route path="/notice" element={<NoticeScreen />} />
+            <Route path="/notice/detail" element={<NoticeDetailScreen />} />
+            <Route
+              path="/profile"
+              element={
+                <KeepAlive>
+                  <ProfileScreen />
+                </KeepAlive>
+              }
+            />
+            <Route path="/passwordchange" element={<PasswordChangeScreen />} />
+          </Route>
+          <Route
+            path="/login"
+            element={<LoginScreen setIsLogin={setIsLogin} />}
+          />
+          <Route path="/profile/setting" element={<ProfileSettingScreen />} />
+          <Route path="/notification" element={<NotificationScreen />} />
+        </Routes>
+      </AliveScope>
     </>
   );
 }

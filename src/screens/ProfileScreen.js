@@ -32,10 +32,10 @@ const ProfileScreen = () => {
   const [levelName, setLevelName] = useState("");
 
   useEffect(() => {
+    let isMounted = true;
+
     const loadUserInfo = async () => {
       try {
-        if (employeeNumber) return;
-
         const { data } = await customAxios.get("/members/info");
         console.log("GET memberinfo: ", data);
 
@@ -52,7 +52,13 @@ const ProfileScreen = () => {
         console.error("GET error: ", error);
       }
     };
-    //loadUserInfo();
+    if (isMounted) {
+      loadUserInfo();
+    }
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const formatHireDate = (dateString) => {

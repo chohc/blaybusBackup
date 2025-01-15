@@ -225,7 +225,7 @@ const MyExpScreen = () => {
           }}
         >
           {["17%", "33%", "29%", "6%"].map((percent, index) => (
-            <LabelEx percent={parseFloat(percent)} index={index} />
+            <LabelEx key={index} percent={parseFloat(percent)} index={index} />
           ))}
         </div>
       </div>
@@ -343,11 +343,11 @@ const MyExpScreen = () => {
         >
           {/* {(level.startsWith("F") ? [0, 1, 2, 3, 4] : [0, 1, 2, 3, 4, 5]).map(
             (n) => (
-              <LabelLevel fullLevel="F1-I" index={n} />
+              <LabelLevel key={index} fullLevel="F1-I" index={n} />
             )
           )} */}
           {[0, 1, 2, 3, 4].map((n) => (
-            <LabelLevel fullLevel="F1-I" index={n} />
+            <LabelLevel key={n} fullLevel="F1-I" index={n} />
           ))}
         </div>
       </div>
