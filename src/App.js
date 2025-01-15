@@ -15,6 +15,7 @@ import NoticeScreen from "./screens/notice/NoticeScreen";
 import ProfileSettingScreen from "./screens/ProfileSettingScreen";
 import NotificationScreen from "./screens/NotificationScreen";
 import { AliveScope, KeepAlive } from "react-activation";
+import NoticeWriteScreen from "./screens/notice/NoticeWriteScreen";
 
 const Layout = () => (
   <div className="page">
@@ -85,7 +86,14 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/myexp" element={<MyExpScreen />} />
-            <Route path="/notice" element={<NoticeScreen />} />
+            <Route
+              path="/notice"
+              element={
+                <KeepAlive>
+                  <NoticeScreen />
+                </KeepAlive>
+              }
+            />
             <Route path="/notice/detail" element={<NoticeDetailScreen />} />
             <Route
               path="/profile"
@@ -103,6 +111,7 @@ function App() {
           />
           <Route path="/profile/setting" element={<ProfileSettingScreen />} />
           <Route path="/notification" element={<NotificationScreen />} />
+          <Route path="/notice/write" element={<NoticeWriteScreen />} />
         </Routes>
       </AliveScope>
     </>

@@ -248,8 +248,10 @@ const HomeScreen = () => {
     <div className="page" style={styles.scrollView}>
       <div style={styles.column}>
         <div style={styles.rowView}>
-          <button style={styles.button} onClick={() => alert("Pressed!")}>F1 - I</button>
-          <span style={styles.textTitle}>총 누적 경험치</span>
+          <button style={styles.button} onClick={() => alert("Pressed!")}>
+            F1 - I
+          </button>
+          <span style={styles.textTitle}>총 획득 경험치</span>
           <div style={{ flex: 1 }}></div>
           <span style={styles.textHighlight}>12,657</span>
           <span style={styles.textDivider}>/</span>
@@ -260,22 +262,44 @@ const HomeScreen = () => {
           <div style={styles.progressBarFill}></div>
         </div>
         <div style={styles.rowView}>
-          <span style={{ ...styles.textSmall, flex: 1, marginRight: "4px" }}>F1 - I</span>
+          <span style={{ ...styles.textSmall, flex: 1, marginRight: "4px" }}>
+            F1 - I
+          </span>
           <span style={styles.textHighlight}>863do</span>
           <span style={styles.textSubtle}>남았어요!</span>
           <span style={styles.textSmall}>F1 - Ⅱ</span>
         </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <img src={HomeTree} alt="Tree Background" style={styles.treeImage} />
         <img src={gif1} alt="Animated character" style={styles.gifImage} />
       </div>
       <div style={styles.absoluteColumn}>
         <div style={styles.rowView}>
-          <span style={{ color: colors.gray[900], fontSize: "18px", fontWeight: "bold", flex: 1, marginRight: "4px" }}>최근 획득한 경험치</span>
+          <span
+            style={{
+              color: colors.gray[900],
+              fontSize: "18px",
+              fontWeight: "bold",
+              flex: 1,
+              marginRight: "4px",
+            }}
+          >
+            최근 획득한 경험치
+          </span>
           <div style={{ display: "flex", alignItems: "center" }}>
             <span style={styles.textDivider}>자세히보기</span>
-            <img src={chevronRight} alt="Chevron Right" style={styles.chevronRightIcon} />
+            <img
+              src={chevronRight}
+              alt="Chevron Right"
+              style={styles.chevronRightIcon}
+            />
           </div>
         </div>
         <div style={styles.recentExpContainer}>

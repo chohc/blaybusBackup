@@ -1,11 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { theme } from "../../themes/theme";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import colors from "../../colors/colors";
 import { NoticeBox } from "../../components/NoticeBox";
+import { customAxios } from "../../customAxios";
+import PressableButton from "../../components/PressableButton";
+import Add from "../../icons/add.svg";
 
 const NoticeScreen = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [post, setPost] = useState([]);
+
+  const loadPost = async () => {
+    try {
+      const { data } = await customAxios.get("/post");
+      console.log("GET Post: ", data);
+      setPost(data.postResponseList);
+    } catch (error) {
+      console.error("GET error: ", error);
+    }
+  };
+
+  // 상세 화면 갔다 돌아올 시 재로드 X
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      loadPost();
+      console.log("hi");
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   if (location.state?.from === "/notice/write") {
+  //     loadPost();
+  //     console.log("실행");
+  //   }
+  // }, [location.state?.from]);
 
   return (
     <div className="page" style={theme.noticeTheme.container}>
@@ -15,24 +49,41 @@ const NoticeScreen = () => {
       </div>
 
       <div style={styles.contentContainer}>
-        <NoticeBox
-          title="AAA 프로젝트 신설 (경험치 500 do, 신청 마감 ~10/31)"
-          content="AAA프로젝트를 신설합니다. 참여를 원하시는 직원분들은 참여를
-            부탁드립니다. 신청 마감은 10월 31일이며 프로젝트 참여 시 경험치
-            500do를 드립니다."
-          date="2025.01.17"
-          onClick={() => {
-            navigate("/notice/detail", {
-              state: {
-                title: "AAA 프로젝트 신설 (경험치 500 do, 신청 마감 ~10/31)",
-                content:
-                  "AAA프로젝트를 신설합니다. 참여를 원하시는 직원분들은 참여를 부탁드립니다. 신청 마감은 10월 31일이며 프로젝트 참여 시 경험치 500do를 드립니다.",
-                date: "2025.01.17",
-              },
-            });
-          }}
-        />
+        {post.map((post, index) => {
+          return (
+            <NoticeBox
+              key={index}
+              title={post.title}
+              content={post.content}
+              date={post.createdAt}
+              onClick={() => {
+                navigate("/notice/detail", {
+                  state: {
+                    title: post.title,
+                    content: post.content,
+                    date: post.createdAt,
+                  },
+                });
+              }}
+            />
+          );
+        })}
       </div>
+      <PressableButton
+        onClick={() => {
+          navigate("/notice/write");
+        }}
+        style={styles.button}
+        pressedStyle={{ backgroundColor: colors.orange[600] }}
+      >
+        <img src={Add} alt="add" style={{ width: 20 }} />
+        <span
+          className="subtitle-1-bold"
+          style={{ color: "#FFF", marginLeft: 4 }}
+        >
+          글쓰기
+        </span>
+      </PressableButton>
     </div>
   );
 };
@@ -46,6 +97,17 @@ const styles = {
     alignItems: "start",
     backgroundColor: "#FFF",
     color: colors.gray[900],
+  },
+  button: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 24,
+    padding: "12px 20px",
+    backgroundColor: colors.orange[500],
+    position: "fixed",
+    bottom: 64,
+    right: 20,
   },
 };
 

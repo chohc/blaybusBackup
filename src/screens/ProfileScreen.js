@@ -9,6 +9,7 @@ import PressableButton from "../components/PressableButton";
 import { theme } from "../themes/theme";
 import { customAxios } from "../customAxios";
 import { getTotalExpInfo } from "../CalcEx";
+import Notification from "../icons/notifications.svg";
 
 const ProfileScreen = () => {
   const navigate = useNavigate();
@@ -93,10 +94,36 @@ const ProfileScreen = () => {
   );
 
   return (
-    <div className="page" style={{ ...theme.pinkPage.container }}>
-      <div style={theme.pinkPage.head}>
+    <div
+      className="page"
+      style={{
+        ...theme.noticeTheme.container,
+        backgroundColor: colors.Primary.bg,
+        paddingLeft: 20,
+        paddingRight: 20,
+      }}
+    >
+      {/* header */}
+      <div
+        style={{
+          ...theme.noticeTheme.header,
+          justifyContent: "space-between",
+        }}
+      >
+        <div style={{ width: 24 }} />
         <span className="title-3-bold">프로필</span>
+        <PressableButton
+          onClick={() => navigate("/notification")}
+          pressedStyle={{ opacity: 0.5 }}
+        >
+          <img
+            src={Notification}
+            alt="back"
+            style={{ width: 24, height: 24 }}
+          />
+        </PressableButton>
       </div>
+      {/* profile_photo */}
       <div style={styles.circle}>
         <img src={profiles.default} alt="이미지" style={styles.image} />
         <PressableButton
@@ -109,7 +136,7 @@ const ProfileScreen = () => {
           <img src={Setting} alt="이미지" style={{ width: 24, height: 24 }} />
         </PressableButton>
       </div>
-
+      {/* content */}
       <div style={theme.boxTheme.boxContainer}>
         <div
           style={{
@@ -127,7 +154,7 @@ const ProfileScreen = () => {
               color={colors.Level.Bronze}
             />
             <span className="Body-2-b" style={{ marginLeft: 8 }}>
-              총 누적 경험치
+              총 획득 경험치
             </span>
           </div>
           <div style={styles.subContainer}>
@@ -190,16 +217,6 @@ const ProfileScreen = () => {
           <PressableButton
             onClick={() => navigate("/passwordchange")}
             pressedStyle={{ opacity: 0.5 }}
-          >
-            <img src={Arrow} alt="arrow" />
-          </PressableButton>
-        </div>
-        <div style={theme.boxTheme.rowContainer}>
-          <span className="subtitle-1-bold">알림 화면</span>
-          <PressableButton
-            onClick={() => navigate("/notification")}
-            pressedStyle={{ opacity: 0.5 }}
-            style={{ marginTop: 24 }}
           >
             <img src={Arrow} alt="arrow" />
           </PressableButton>

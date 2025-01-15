@@ -129,6 +129,7 @@ const ProfileSettingScreen = () => {
         </div>
         {/* button */}
         <BottomButton
+          onClick={() => {}}
           disabledCondition={beforeItem === selectedItem}
           text="저장하기"
         />

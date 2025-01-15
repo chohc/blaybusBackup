@@ -143,10 +143,10 @@ const MyExpScreen = () => {
       <div style={{ ...theme.pinkPage.head, marginBottom: 20 }}>
         <span className="title-3-bold">내 경험치</span>
       </div>
-      {/* 총 누적 경험치 */}
+      {/* 총 획득 경험치 */}
       <div style={theme.boxTheme.boxContainer}>
         <span className="Body-2-b" style={{ marginBottom: 4 }}>
-          총 누적 경험치
+          총 획득 경험치
         </span>
         <span style={styles.subText}>
           올해+작년 획득 총 경험치 / 다음 레벨 요구 경험치
