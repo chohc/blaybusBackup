@@ -20,8 +20,6 @@ const HomeScreen = () => {
   const [totalExperience, setTotalExperience] = useState("");
 
   useEffect(() => {
-    let isMounted = true;
-
     const loadUserInfo = async () => {
       try {
         const { data } = await customAxios.get("/members/info");
@@ -32,13 +30,7 @@ const HomeScreen = () => {
         console.error("GET error: ", error);
       }
     };
-    if (isMounted) {
-      loadUserInfo();
-    }
-
-    return () => {
-      isMounted = false;
-    };
+    loadUserInfo();
   }, []);
 
   return (
@@ -52,15 +44,7 @@ const HomeScreen = () => {
         />
       </div>
       {/* vedio */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flex: 1,
-          paddingBottom: 30,
-        }}
-      >
+      <div style={styles.vedioContainer}>
         <img src={HomeTree} alt="Tree Background" style={styles.treeImage} />
         <img src={gif1} alt="Animated character" style={styles.gifImage} />
       </div>
@@ -136,8 +120,15 @@ const styles = {
     backgroundRepeat: "no-repeat",
     height: "100vh",
     width: "100%",
-    overflow: "hidden",
+    // overflow: "hidden",
     paddingTop: 20,
+  },
+  vedioContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    paddingBottom: 30,
   },
   treeImage: {
     position: "absolute",

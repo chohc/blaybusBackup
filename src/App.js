@@ -83,14 +83,7 @@ function App() {
       <AliveScope>
         <Routes>
           <Route element={<Layout />}>
-            <Route
-              path="/"
-              element={
-                <KeepAlive>
-                  <Home />
-                </KeepAlive>
-              }
-            />
+            <Route path="/" element={<Home />} />
             <Route path="/myexp" element={<MyExpScreen />} />
             <Route
               path="/notice"
