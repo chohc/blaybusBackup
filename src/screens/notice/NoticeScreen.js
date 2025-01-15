@@ -7,7 +7,7 @@ import { customAxios } from "../../customAxios";
 import PressableButton from "../../components/PressableButton";
 import Add from "../../icons/add.svg";
 
-const NoticeScreen = () => {
+const NoticeScreen = ({ isAdmin }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [post, setPost] = useState([]);
@@ -69,21 +69,24 @@ const NoticeScreen = () => {
           );
         })}
       </div>
-      <PressableButton
-        onClick={() => {
-          navigate("/notice/write");
-        }}
-        style={styles.button}
-        pressedStyle={{ backgroundColor: colors.orange[600] }}
-      >
-        <img src={Add} alt="add" style={{ width: 20 }} />
-        <span
-          className="subtitle-1-bold"
-          style={{ color: "#FFF", marginLeft: 4 }}
+      {/* admin account */}
+      {isAdmin && (
+        <PressableButton
+          onClick={() => {
+            navigate("/notice/write");
+          }}
+          style={styles.button}
+          pressedStyle={{ backgroundColor: colors.orange[600] }}
         >
-          글쓰기
-        </span>
-      </PressableButton>
+          <img src={Add} alt="add" style={{ width: 20 }} />
+          <span
+            className="subtitle-1-bold"
+            style={{ color: "#FFF", marginLeft: 4 }}
+          >
+            글쓰기
+          </span>
+        </PressableButton>
+      )}
     </div>
   );
 };

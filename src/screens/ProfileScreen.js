@@ -3,13 +3,12 @@ import { useNavigate } from "react-router-dom";
 import "../fonts/font.css";
 import colors from "../colors/colors";
 import Setting from "../images/profile/settings.svg";
-import LevelChip from "../components/LevelChip";
 import Arrow from "../icons/keyboard_arrow_right.svg";
 import PressableButton from "../components/PressableButton";
 import { theme } from "../themes/theme";
 import { customAxios } from "../customAxios";
-import { getTotalExpInfo } from "../CalcEx";
 import Notification from "../icons/notifications.svg";
+import { MyExpBox } from "../components/MyExpBox";
 
 const ProfileScreen = () => {
   const navigate = useNavigate();
@@ -31,6 +30,7 @@ const ProfileScreen = () => {
   const [loginId, setLoginId] = useState("");
   const [totalExperience, setTotalExperience] = useState(0);
   const [levelName, setLevelName] = useState("");
+  const [profileCharacter, setProfileCharacter] = useState("");
 
   useEffect(() => {
     let isMounted = true;
@@ -49,6 +49,11 @@ const ProfileScreen = () => {
         setTotalExperience(data.totalExperience);
         // setLevelName(data.levelName);
         setLevelName("F2-I");
+        if (data.profileCharacter) {
+          setProfileCharacter(data.profileCharacter);
+        } else {
+          setProfileCharacter("default");
+        }
       } catch (error) {
         console.error("GET error: ", error);
       }
@@ -87,12 +92,6 @@ const ProfileScreen = () => {
     );
   };
 
-  // 경험치 계산
-  const { nextLevel, nextLevelExp, remainExp, percent } = getTotalExpInfo(
-    "F2-I",
-    totalExperience
-  );
-
   return (
     <div
       className="page"
@@ -125,10 +124,16 @@ const ProfileScreen = () => {
       </div>
       {/* profile_photo */}
       <div style={styles.circle}>
-        <img src={profiles.default} alt="이미지" style={styles.image} />
+        <img
+          src={profiles[profileCharacter]}
+          alt="이미지"
+          style={styles.image}
+        />
         <PressableButton
           onClick={() => {
-            navigate("/profile/setting");
+            navigate("/profile/setting", {
+              state: { profileCharacter },
+            });
           }}
           style={styles.miniCircle}
           pressedStyle={{ backgroundColor: colors.gray[100] }}
@@ -137,60 +142,7 @@ const ProfileScreen = () => {
         </PressableButton>
       </div>
       {/* content */}
-      <div style={theme.boxTheme.boxContainer}>
-        <div
-          style={{
-            ...theme.boxTheme.rowContainer,
-            marginBottom: 12,
-          }}
-        >
-          <div style={styles.subContainer}>
-            <LevelChip
-              text={
-                levelName.length > 3
-                  ? `${levelName.slice(0, 2)} - ${levelName.slice(3)}`
-                  : levelName
-              }
-              color={colors.Level.Bronze}
-            />
-            <span className="Body-2-b" style={{ marginLeft: 8 }}>
-              총 획득 경험치
-            </span>
-          </div>
-          <div style={styles.subContainer}>
-            <span className="Body-2-b" style={{ color: colors.Level.Bronze }}>
-              {totalExperience.toLocaleString()}
-            </span>
-            <pre className="Body-2-b" style={{ color: colors.gray[600] }}>
-              {" "}
-              / {nextLevelExp.toLocaleString()}do
-            </pre>
-          </div>
-        </div>
-        <div style={theme.boxTheme.barContainer}>
-          <div
-            style={{
-              ...theme.boxTheme.colorbar,
-              width: `${percent}%`,
-              backgroundColor: colors.Level.Bronze,
-            }}
-          />
-        </div>
-        <div style={{ ...theme.boxTheme.rowContainer, marginTop: 8 }}>
-          <span className="label-1-r">{levelName}</span>
-          <div style={styles.subContainer}>
-            <span className="label-1-b" style={{ color: colors.Level.Bronze }}>
-              {`${remainExp.toLocaleString()}do`}
-            </span>
-            <pre className="label-1-r" style={{ color: colors.gray[600] }}>
-              {" "}
-              남았어요!
-            </pre>
-          </div>
-          <span className="label-1-r">{nextLevel}</span>
-        </div>
-      </div>
-
+      <MyExpBox levelName="F2-I" totalExperience={totalExperience} />
       <div style={theme.boxTheme.boxContainer}>
         <Content text1="사번" text2={employeeNumber} isMargin={true} />
         <Content text1="이름" text2={name} isMargin={true} />

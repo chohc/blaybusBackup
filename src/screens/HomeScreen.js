@@ -8,300 +8,65 @@ import HomeTree from "../images/home/HomeTree.png";
 import HomeBackground from "../images/home/HomeBackground.png";
 import dart from "../images/exp/exp_dart.png";
 import chevronRight from "../icons/chevron_right.png";
+import { MyExpBox } from "../components/MyExpBox";
+import { theme } from "../themes/theme";
+import PressableButton from "../components/PressableButton";
+import { useNavigate } from "react-router-dom";
 
 const HomeScreen = () => {
-  const styles = {
-    scrollView: {
-      backgroundImage: `url(${HomeBackground})`,
-      backgroundSize: "cover",
-      backgroundRepeat: "no-repeat",
-      height: "844px",
-      width: "390px",
-      overflow: "hidden",
-      paddingTop: "64px",
-    },
-    column: {
-      alignSelf: "stretch",
-      background: "#FFFFFF",
-      borderRadius: "16px",
-      padding: "20px",
-      marginBottom: "30px",
-      marginLeft: "17px",
-      marginRight: "17px",
-      boxShadow: "0px 2px 11px #9E1F0026",
-    },
-    rowView: {
-      alignSelf: "stretch",
-      display: "flex",
-      alignItems: "center",
-      marginBottom: "11px",
-    },
-    button: {
-      width: "51px",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      background: "#816043",
-      borderRadius: "8px",
-      border: "none",
-      paddingTop: "8px",
-      paddingBottom: "8px",
-      marginRight: "8px",
-      textAlign: "left",
-      color: "#FFFFFF",
-      fontSize: "12px",
-      fontWeight: "bold",
-    },
-    progressBarBackground: {
-      alignSelf: "stretch",
-      background: "#DCDEE3",
-      borderRadius: "25px",
-      height: "12px",
-      marginBottom: "10px",
-      display: "flex",
-    },
-    progressBarFill: {
-      background: "#816043",
-      width: "85%",
-      height: "100%",
-      borderRadius: "25px",
-    },
-    treeImage: {
-      position: "absolute",
-      zIndex: 1,
-      width: "338px",
-      height: "271px",
-      marginTop: "190px",
-    },
-    gifImage: {
-      position: "relative",
-      zIndex: 2,
-      width: "255px",
-      height: "297px",
-      marginLeft: "10px",
-    },
-    absoluteColumn: {
-      position: "absolute",
-      top: "610px",
-      left: "50%",
-      transform: "translateX(-50%)",
-      width: "390px",
-      height: "196px",
-      background: "#FFFFFFB0",
-      borderRadius: "16px",
-      gap: "20px",
-      padding: "20px",
-      boxShadow: "0px 2px 11.8px 0px rgba(158, 31, 0, 0.15)",
-    },
-    recentExpContainer: {
-      display: "flex",
-      alignItems: "center",
-      background: "#ffffff",
-      padding: "20px",
-      borderRadius: "16px",
-      boxShadow: "0px 2px 11px #9E1F0026",
-    },
-    recentExpIcon: {
-      width: "80px",
-      height: "80px",
-      background: "#FFCCC0",
-      borderRadius: "100px",
-      paddingLeft: "12px",
-      marginRight: "18px",
-    },
-    recentExpIconImage: {
-      height: "66px",
-      marginTop: "4px",
-      objectFit: "fill",
-    },
-    recentExpDetails: {
-      flex: 1,
-      marginRight: "4px",
-    },
-    recentExpDetailRow: {
-      display: "flex",
-      alignItems: "center",
-      marginBottom: "8px",
-    },
-    recentExpDetailTitle: {
-      color: "#212124",
-      fontSize: "14px",
-      fontWeight: "bold",
-      marginRight: "10px",
-    },
-    recentExpBadge: {
-      width: "58px",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      background: "#FFEFEB",
-      borderRadius: "16px",
-      paddingTop: "5px",
-      paddingBottom: "5px",
-    },
-    recentExpBadgeText: {
-      color: "#FF5C35",
-      fontSize: "12px",
-      fontWeight: "bold",
-    },
-    recentExpMaxBadge: {
-      width: "66px",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      background: "#28BF4F",
-      borderRadius: "8px",
-      paddingTop: "5px",
-      paddingBottom: "5px",
-      marginRight: "8px",
-    },
-    recentExpMaxBadgeText: {
-      color: "#FFFFFF",
-      fontSize: "12px",
-    },
-    recentExpMonthBadge: {
-      width: "32px",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      background: "#EAEBEE",
-      borderRadius: "8px",
-      paddingTop: "5px",
-      paddingBottom: "5px",
-    },
-    recentExpMonthBadgeText: {
-      color: colors.gray[600],
-      fontSize: "12px",
-    },
-    recentExpDateRow: {
-      display: "flex",
-      alignItems: "center",
-      marginRight: "15px",
-    },
-    recentExpDate: {
-      color: colors.gray[600],
-      fontSize: "12px",
-      marginRight: "11px",
-    },
-    recentExpDivider: {
-      width: "1px",
-      height: "7px",
-      marginRight: "7px",
-      objectFit: "fill",
-    },
-    recentExpCount: {
-      color: colors.gray[900],
-      fontSize: "12px",
-      fontFamily: "Pretendard",
-      flex: 1,
-    },
-    recentExpPoint: {
-      color: colors.gray[900],
-      fontSize: "14px",
-      fontWeight: "bold",
-      marginRight: "3px",
-      fontFamily: "Pretendard",
-    },
-    recentExpPointUnit: {
-      color: colors.gray[600],
-      fontSize: "14px",
-      fontWeight: "bold",
-      fontFamily: "Pretendard",
-    },
-    textTitle: {
-      color: colors.gray[900],
-      fontSize: "14px",
-      fontWeight: "bold",
-      fontFamily: "Pretendard",
-    },
-    textHighlight: {
-      color: "#816043",
-      fontSize: "14px",
-      fontWeight: "bold",
-      marginRight: "6px",
-    },
-    textDivider: {
-      color: colors.gray[600],
-      fontSize: "14px",
-      fontFamily: "Pretendard",
-      marginRight: "6px",
-    },
-    textSmall: {
-      color: colors.gray[900],
-      fontSize: "12px",
-      fontFamily: "Pretendard",
-    },
-    textSubtle: {
-      color: colors.gray[600],
-      fontSize: "12px",
-      marginRight: "86px",
-      fontFamily: "Pretendard",
-    },
-    chevronRightIcon: {
-      width: "7px",
-      height: "11px",
-      marginRight: "6px",
-    },
-  };
+  const navigate = useNavigate();
 
   return (
-    <div className="page" style={styles.scrollView}>
-      <div style={styles.column}>
-        <div style={styles.rowView}>
-          <button style={styles.button} onClick={() => alert("Pressed!")}>
-            F1 - I
-          </button>
-          <span style={styles.textTitle}>총 획득 경험치</span>
-          <div style={{ flex: 1 }}></div>
-          <span style={styles.textHighlight}>12,657</span>
-          <span style={styles.textDivider}>/</span>
-          <span style={styles.textDivider}>13,500</span>
-          <span style={styles.textDivider}>do</span>
-        </div>
-        <div style={styles.progressBarBackground}>
-          <div style={styles.progressBarFill}></div>
-        </div>
-        <div style={styles.rowView}>
-          <span style={{ ...styles.textSmall, flex: 1, marginRight: "4px" }}>
-            F1 - I
-          </span>
-          <span style={styles.textHighlight}>863do</span>
-          <span style={styles.textSubtle}>남았어요!</span>
-          <span style={styles.textSmall}>F1 - Ⅱ</span>
-        </div>
+    <div className="page" style={styles.container}>
+      {/* total experience */}
+      <div style={{ width: "100%", padding: "0px 20px" }}>
+        <MyExpBox levelName="F3-I" totalExperience={40000} bgWhite={true} />
       </div>
+      {/* vedio */}
       <div
         style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          flex: 1,
+          paddingBottom: 30,
         }}
       >
         <img src={HomeTree} alt="Tree Background" style={styles.treeImage} />
         <img src={gif1} alt="Animated character" style={styles.gifImage} />
       </div>
-      <div style={styles.absoluteColumn}>
-        <div style={styles.rowView}>
-          <span
-            style={{
-              color: colors.gray[900],
-              fontSize: "18px",
-              fontWeight: "bold",
-              flex: 1,
-              marginRight: "4px",
-            }}
-          >
+      {/* recent experience */}
+      <div
+        style={{
+          ...theme.boxTheme.boxContainer,
+          boxShadow: "0px -2px 8px rgba(159, 32, 0, 0.16)",
+          borderBottomLeftRadius: 0,
+          borderBottomRightRadius: 0,
+          paddingBottom: 54,
+        }}
+      >
+        <div style={{ ...theme.boxTheme.rowContainer, marginBottom: 12 }}>
+          <span className="title-3-bold" style={{ color: colors.gray[900] }}>
             최근 획득한 경험치
           </span>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <span style={styles.textDivider}>자세히보기</span>
+          <PressableButton
+            onClick={() => {
+              // 경험치 목록으로 이동
+            }}
+            style={{ display: "flex", alignItems: "center" }}
+            pressedStyle={{ opacity: 0.5 }}
+          >
+            <span className="label-1-r" style={{ color: colors.gray[600] }}>
+              자세히보기
+            </span>
             <img
               src={chevronRight}
-              alt="Chevron Right"
-              style={styles.chevronRightIcon}
+              alt="arrow"
+              style={{ height: 12, marginLeft: 8 }}
             />
-          </div>
+          </PressableButton>
         </div>
+
         <div style={styles.recentExpContainer}>
           <div style={styles.recentExpIcon}>
             <img src={dart} alt="Icon" style={styles.recentExpIconImage} />
@@ -333,6 +98,181 @@ const HomeScreen = () => {
       </div>
     </div>
   );
+};
+
+const styles = {
+  container: {
+    backgroundImage: `url(${HomeBackground})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    height: "100vh",
+    width: "100%",
+    overflow: "hidden",
+    paddingTop: 20,
+  },
+  treeImage: {
+    position: "absolute",
+    zIndex: 1,
+    width: "338px",
+    height: "271px",
+    bottom: 236,
+  },
+  gifImage: {
+    position: "relative",
+    zIndex: 2,
+    width: "255px",
+    height: "297px",
+    marginLeft: "10px",
+  },
+  recentExpContainer: {
+    display: "flex",
+    alignItems: "center",
+    background: "#ffffff",
+    padding: "20px",
+    borderRadius: "16px",
+    boxShadow: "0px 2px 11px #9E1F0026",
+  },
+  recentExpIcon: {
+    width: "80px",
+    height: "80px",
+    background: "#FFCCC0",
+    borderRadius: "100px",
+    paddingLeft: "12px",
+    marginRight: "18px",
+  },
+  recentExpIconImage: {
+    height: "66px",
+    marginTop: "4px",
+    objectFit: "fill",
+  },
+  recentExpDetails: {
+    flex: 1,
+    marginRight: "4px",
+  },
+  recentExpDetailRow: {
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "8px",
+  },
+  recentExpDetailTitle: {
+    color: "#212124",
+    fontSize: "14px",
+    fontWeight: "bold",
+    marginRight: "10px",
+  },
+  recentExpBadge: {
+    width: "58px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    background: "#FFEFEB",
+    borderRadius: "16px",
+    paddingTop: "5px",
+    paddingBottom: "5px",
+  },
+  recentExpBadgeText: {
+    color: "#FF5C35",
+    fontSize: "12px",
+    fontWeight: "bold",
+  },
+  recentExpMaxBadge: {
+    width: "66px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    background: "#28BF4F",
+    borderRadius: "8px",
+    paddingTop: "5px",
+    paddingBottom: "5px",
+    marginRight: "8px",
+  },
+  recentExpMaxBadgeText: {
+    color: "#FFFFFF",
+    fontSize: "12px",
+  },
+  recentExpMonthBadge: {
+    width: "32px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    background: "#EAEBEE",
+    borderRadius: "8px",
+    paddingTop: "5px",
+    paddingBottom: "5px",
+  },
+  recentExpMonthBadgeText: {
+    color: colors.gray[600],
+    fontSize: "12px",
+  },
+  recentExpDateRow: {
+    display: "flex",
+    alignItems: "center",
+    marginRight: "15px",
+  },
+  recentExpDate: {
+    color: colors.gray[600],
+    fontSize: "12px",
+    marginRight: "11px",
+  },
+  recentExpDivider: {
+    width: "1px",
+    height: "7px",
+    marginRight: "7px",
+    objectFit: "fill",
+  },
+  recentExpCount: {
+    color: colors.gray[900],
+    fontSize: "12px",
+    fontFamily: "Pretendard",
+    flex: 1,
+  },
+  recentExpPoint: {
+    color: colors.gray[900],
+    fontSize: "14px",
+    fontWeight: "bold",
+    marginRight: "3px",
+    fontFamily: "Pretendard",
+  },
+  recentExpPointUnit: {
+    color: colors.gray[600],
+    fontSize: "14px",
+    fontWeight: "bold",
+    fontFamily: "Pretendard",
+  },
+  textTitle: {
+    color: colors.gray[900],
+    fontSize: "14px",
+    fontWeight: "bold",
+    fontFamily: "Pretendard",
+  },
+  textHighlight: {
+    color: "#816043",
+    fontSize: "14px",
+    fontWeight: "bold",
+    marginRight: "6px",
+  },
+  textDivider: {
+    color: colors.gray[600],
+    fontSize: "14px",
+    fontFamily: "Pretendard",
+    marginRight: "6px",
+  },
+  textSmall: {
+    color: colors.gray[900],
+    fontSize: "12px",
+    fontFamily: "Pretendard",
+  },
+  textSubtle: {
+    color: colors.gray[600],
+    fontSize: "12px",
+    marginRight: "86px",
+    fontFamily: "Pretendard",
+  },
+  chevronRightIcon: {
+    width: "7px",
+    height: "11px",
+    marginRight: "6px",
+  },
 };
 
 export default HomeScreen;

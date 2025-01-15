@@ -6,7 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-const LoginScreen = ({ setIsLogin }) => {
+const LoginScreen = ({ setIsLogin, setIsAdmin }) => {
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
   const [focusedInput, setFocusedInput] = useState(null);
@@ -23,7 +23,6 @@ const LoginScreen = ({ setIsLogin }) => {
   const handleLogin = async () => {
     try {
       const fcmToken = localStorage.getItem("fcmToken");
-
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/auth/login`,
         { loginId: input1, password: input2, fcmToken: fcmToken },
@@ -35,7 +34,9 @@ const LoginScreen = ({ setIsLogin }) => {
         toast.success("로그인 성공!", {
           duration: 1000,
         });
-        console.log("로그인 성공");
+        if (input1 === "admin" && input2 === "1111") {
+          setIsAdmin(true);
+        }
         setIsLogin(true);
         setTimeout(() => navigate("/", { replace: true }), 0);
       }

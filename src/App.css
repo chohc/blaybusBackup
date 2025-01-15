@@ -55,11 +55,6 @@ html {
   overscroll-behavior: none;
 }
 
-.wrap {
-  padding-bottom: 6vh;
-  /* padding-top: 6vh; */
-}
-
 @media (min-width: 390px) {
   .page {
     min-width: 390px;

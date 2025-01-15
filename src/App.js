@@ -19,9 +19,7 @@ import NoticeWriteScreen from "./screens/notice/NoticeWriteScreen";
 
 const Layout = () => (
   <div className="page">
-    <div className="wrap">
-      <Outlet />
-    </div>
+    <Outlet />
     <Navbar />
   </div>
 );
@@ -29,6 +27,7 @@ const Layout = () => (
 function App() {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // FCM
   useEffect(() => {
@@ -90,7 +89,7 @@ function App() {
               path="/notice"
               element={
                 <KeepAlive>
-                  <NoticeScreen />
+                  <NoticeScreen isAdmin={isAdmin} />
                 </KeepAlive>
               }
             />
@@ -107,7 +106,9 @@ function App() {
           </Route>
           <Route
             path="/login"
-            element={<LoginScreen setIsLogin={setIsLogin} />}
+            element={
+              <LoginScreen setIsLogin={setIsLogin} setIsAdmin={setIsAdmin} />
+            }
           />
           <Route path="/profile/setting" element={<ProfileSettingScreen />} />
           <Route path="/notification" element={<NotificationScreen />} />

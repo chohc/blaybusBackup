@@ -1,19 +1,34 @@
 import PressableButton from "../components/PressableButton";
 import { theme } from "../themes/theme";
 import Back from "../icons/arrow_back.svg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import colors from "../colors/colors";
 import { useEffect, useState } from "react";
 import { BottomButton } from "../components/BottomButton";
+import { customAxios } from "../customAxios";
 
 const ProfileSettingScreen = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [beforeItem, setBeforeItem] = useState("default");
   const [selectedItem, setSelectedItem] = useState("default");
+  const { profileCharacter } = location.state || {};
 
   useEffect(() => {
-    setBeforeItem("default");
+    setBeforeItem(profileCharacter);
   }, []);
+
+  const handleChangeProfile = async () => {
+    try {
+      const response = await customAxios.put(`/members/update-char`, {
+        profile_character: selectedItem,
+      });
+      console.log("PUT: ", response);
+      navigate(-1);
+    } catch (error) {
+      console.error("PUT error: ", error);
+    }
+  };
 
   const profiles = {
     profile: {
@@ -129,7 +144,7 @@ const ProfileSettingScreen = () => {
         </div>
         {/* button */}
         <BottomButton
-          onClick={() => {}}
+          onClick={handleChangeProfile}
           disabledCondition={beforeItem === selectedItem}
           text="저장하기"
         />
