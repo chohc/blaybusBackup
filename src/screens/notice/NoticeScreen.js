@@ -15,31 +15,29 @@ const NoticeScreen = ({ isAdmin }) => {
   const loadPost = async () => {
     try {
       const { data } = await customAxios.get("/post");
-      console.log("GET Post: ", data);
+      console.log("GET post: ", data);
       setPost(data.postResponseList);
     } catch (error) {
       console.error("GET error: ", error);
     }
   };
 
-  // 상세 화면 갔다 돌아올 시 재로드 X
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
       loadPost();
-      console.log("hi");
     }
     return () => {
       isMounted = false;
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (location.state?.from === "/notice/write") {
-  //     loadPost();
-  //     console.log("실행");
-  //   }
-  // }, [location.state?.from]);
+  useEffect(() => {
+    if (location.state?.from === "/notice/write") {
+      loadPost();
+      console.log("게시글 변경 GET");
+    }
+  }, [location.state?.from]);
 
   return (
     <div className="page" style={theme.noticeTheme.container}>

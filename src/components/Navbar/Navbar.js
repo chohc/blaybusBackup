@@ -116,9 +116,10 @@ export default function Navbar() {
           />
           <span
             style={{
-              color:
-                location.pathname === "/notice/detail" && colors.orange[500],
-              fontWeight: 700,
+              ...(location.pathname === "/notice/detail" && {
+                color: colors.orange[500],
+                fontWeight: 700,
+              }),
             }}
           >
             게시판

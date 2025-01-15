@@ -79,4 +79,28 @@ export const theme = {
       backgroundColor: colors.Primary.bg,
     },
   },
+  pageTheme: {
+    container: {
+      display: "flex",
+      flexDirection: "column",
+      minHeight: "100vh",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      backgroundColor: "#FFF",
+      padding: "45px 0px 0px 0px",
+    },
+    header: {
+      display: "flex",
+      maxWidth: 420,
+      height: 48,
+      alignItems: "center",
+      justifyContent: "center",
+      width: "100%",
+      padding: "3px 16px 0px 16px",
+      position: "fixed",
+      top: 0,
+      zIndex: 1000,
+      backgroundColor: colors.Primary.bg,
+    },
+  },
 };

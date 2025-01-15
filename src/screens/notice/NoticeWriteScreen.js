@@ -32,7 +32,7 @@ const NoticeWriteScreen = ({ mode }) => {
         title: title,
         content: content,
       });
-      navigate(-1);
+      navigate(-1, { state: { from: "/notice/write" } });
     } catch (error) {
       console.log("post error: ", error);
     }

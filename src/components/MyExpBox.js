@@ -4,6 +4,8 @@ import { theme } from "../themes/theme";
 import LevelChip from "./LevelChip";
 
 export const MyExpBox = ({ levelName, totalExperience, bgWhite = false }) => {
+  if (!levelName) return;
+
   const level_color = {
     "F1-I": colors.Level.Bronze,
     "F1-Ⅱ": colors.Level.Bronze,

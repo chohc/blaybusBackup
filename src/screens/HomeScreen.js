@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../fonts/font.css";
 import "../App.css";
 import "./HomeScreen.css";
@@ -12,15 +12,44 @@ import { MyExpBox } from "../components/MyExpBox";
 import { theme } from "../themes/theme";
 import PressableButton from "../components/PressableButton";
 import { useNavigate } from "react-router-dom";
+import { customAxios } from "../customAxios";
 
 const HomeScreen = () => {
   const navigate = useNavigate();
+  const [levelName, setLevelName] = useState("");
+  const [totalExperience, setTotalExperience] = useState("");
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadUserInfo = async () => {
+      try {
+        const { data } = await customAxios.get("/members/info");
+        console.log("GET: ", data);
+        setTotalExperience(data.totalExperience);
+        setLevelName(data.levelName);
+      } catch (error) {
+        console.error("GET error: ", error);
+      }
+    };
+    if (isMounted) {
+      loadUserInfo();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <div className="page" style={styles.container}>
       {/* total experience */}
       <div style={{ width: "100%", padding: "0px 20px" }}>
-        <MyExpBox levelName="F3-I" totalExperience={40000} bgWhite={true} />
+        <MyExpBox
+          levelName={levelName}
+          totalExperience={totalExperience}
+          bgWhite={true}
+        />
       </div>
       {/* vedio */}
       <div

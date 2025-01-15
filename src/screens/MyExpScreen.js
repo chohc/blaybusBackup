@@ -139,12 +139,20 @@ const MyExpScreen = () => {
   };
 
   return (
-    <div className="page" style={theme.pinkPage.container}>
-      <div style={{ ...theme.pinkPage.head, marginBottom: 20 }}>
+    <div
+      className="page"
+      style={{
+        ...theme.pageTheme.container,
+        backgroundColor: colors.Primary.bg,
+        padding: "45px 20px 40px 20px",
+      }}
+    >
+      {/* header */}
+      <div style={theme.pageTheme.header}>
         <span className="title-3-bold">내 경험치</span>
       </div>
       {/* 총 획득 경험치 */}
-      <div style={theme.boxTheme.boxContainer}>
+      <div style={{ ...theme.boxTheme.boxContainer, marginTop: 20 }}>
         <span className="Body-2-b" style={{ marginBottom: 4 }}>
           총 획득 경험치
         </span>

@@ -34,8 +34,11 @@ const LoginScreen = ({ setIsLogin, setIsAdmin }) => {
         toast.success("로그인 성공!", {
           duration: 1000,
         });
-        if (input1 === "admin" && input2 === "1111") {
+        // 어드민 계정 설정
+        if (input1 === "2222" && input2 === "2222") {
           setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
         }
         setIsLogin(true);
         setTimeout(() => navigate("/", { replace: true }), 0);

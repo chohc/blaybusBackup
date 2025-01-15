@@ -47,8 +47,8 @@ const ProfileScreen = () => {
         setJobGroup(data.jobGroup);
         setLoginId(data.loginId);
         setTotalExperience(data.totalExperience);
-        // setLevelName(data.levelName);
-        setLevelName("F2-I");
+        setLevelName(data.levelName);
+
         if (data.profileCharacter) {
           setProfileCharacter(data.profileCharacter);
         } else {
@@ -142,7 +142,7 @@ const ProfileScreen = () => {
         </PressableButton>
       </div>
       {/* content */}
-      <MyExpBox levelName="F2-I" totalExperience={totalExperience} />
+      <MyExpBox levelName={levelName} totalExperience={totalExperience} />
       <div style={theme.boxTheme.boxContainer}>
         <Content text1="사번" text2={employeeNumber} isMargin={true} />
         <Content text1="이름" text2={name} isMargin={true} />

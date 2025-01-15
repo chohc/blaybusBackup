@@ -61,6 +61,15 @@ const level_table = {
 // 총 획득 경험치
 // return 다음 레벨, 다음 레벨 경험치, 남은 경험치, %
 export const getTotalExpInfo = (level, totalExp) => {
+  if (!level) {
+    return {
+      nextLevel: "None",
+      nextLevelExp: 0,
+      remainExp: 0,
+      percent: 0,
+    };
+  }
+
   const { levels, experience } = level_table[level.slice(0, 1)];
   const currentIndex = levels.indexOf(level);
 
