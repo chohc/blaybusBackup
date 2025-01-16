@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import LeftArrow from "../images/quest/arrow_left_black.png";
 import RightArrowBlack from "../images/quest/arrow_right_black.png";
 import RightArrowGray from "../images/quest/arrow_right_gray.png";
-import RecentExperience from "../components/RecentExperience";
+import QuestExperience from "../components/QuestExperience";
 import axios from "axios";
 
 import TaskIcon from "../images/exp/duty_image.png";
@@ -172,7 +172,7 @@ const QuestScreen = () => {
                   backgroundColor: isAchieved ? "#FFFFFF" : "#E0E0E0",
                 }}
               >
-                <RecentExperience
+                <QuestExperience
                   title={quest.title || "제목 없음"}
                   badgeText={badgeText}
                   maxBadgeText={quest.achievedLevel || "N/A"}
