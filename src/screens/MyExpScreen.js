@@ -103,7 +103,7 @@ const MyExpScreen = ({ myLevel }) => {
         console.err("Get experiences: ", error);
       }
     };
-    loadExperiences();
+    // loadExperiences();
   }, []);
 
   const ColorBar = ({ percent }) => {
@@ -229,7 +229,7 @@ const MyExpScreen = ({ myLevel }) => {
       style={{
         ...theme.pageTheme.container,
         backgroundColor: colors.Primary.bg,
-        padding: "45px 20px 40px 20px",
+        padding: "90px 20px 40px 20px",
       }}
     >
       {/* header */}

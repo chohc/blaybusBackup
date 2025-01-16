@@ -2,12 +2,13 @@ import React from "react";
 import "../App.css";
 import "../fonts/font.css";
 import colors from "../colors/colors";
-import arrowBack from "../images/arrow_back.png";
+import arrowBack from "../icons/arrow_back.svg";
 import arrowDown from "../images/down_arrow.png";
 import { RecentExprience } from "../components/QuestExperience";
 import { MyExpBox } from "../components/MyExpBox";
 import PressableButton from "../components/PressableButton";
 import { Navigate, useNavigate } from "react-router-dom";
+import { theme } from "../themes/theme";
 
 const styles = {
   container: {
@@ -54,8 +55,7 @@ const styles = {
     display: "flex",
     alignItems: "flex-start",
     marginBottom: 14,
-    marginLeft: 20,
-    marginRight: 20,
+    backgrounColor: colors.Primary.bg,
   },
   statsText: {
     color: "#212124",
@@ -92,29 +92,42 @@ const ExperienceList = ({ myLevel, myTotalExperience }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="page" style={styles.container}>
-      <div style={styles.header}>
+    <div className="page" style={theme.pageTheme.container}>
+      <div
+        style={{
+          ...theme.noticeTheme.header,
+          justifyContent: "space-between",
+        }}
+      >
         <PressableButton
           onClick={() => navigate(-1)}
           pressedStyle={{ opacity: 0.5 }}
         >
-          <img src={arrowBack} style={styles.headerImage} alt="icon" />
+          <img src={arrowBack} alt="back" style={{ width: 24, height: 24 }} />
         </PressableButton>
         <span style={styles.headerText}>경험치 달성 목록</span>
+        <div style={{ width: 24 }} />
       </div>
-      <div style={{ width: "100%", padding: "0px 20px" }}>
+      <div
+        style={{
+          width: "100%",
+          padding: "20px 20px 6px 20px",
+          backgroundColor: colors.Primary.bg,
+        }}
+      >
         <MyExpBox levelName={myLevel} totalExperience={myTotalExperience} />
+        <div style={styles.statsContainer}>
+          <span style={styles.statsText}>총</span>
+          <span style={styles.statsBoldText}>4</span>
+          <span style={styles.statsText}>건</span>
+          <div style={styles.flexSpacer} />
+          <span style={styles.statsText}>전체기간</span>
+          <span style={styles.statsDivider}>·</span>
+          <span style={styles.statsText}>전체</span>
+          <img src={arrowDown} style={styles.arrowImage} alt="icon" />
+        </div>
       </div>
-      <div style={styles.statsContainer}>
-        <span style={styles.statsText}>총</span>
-        <span style={styles.statsBoldText}>4</span>
-        <span style={styles.statsText}>건</span>
-        <div style={styles.flexSpacer} />
-        <span style={styles.statsText}>전체기간</span>
-        <span style={styles.statsDivider}>·</span>
-        <span style={styles.statsText}>전체</span>
-        <img src={arrowDown} style={styles.arrowImage} alt="icon" />
-      </div>
+
       <div style={styles.card} />
     </div>
   );
