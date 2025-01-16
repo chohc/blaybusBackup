@@ -17,6 +17,8 @@ import NotificationScreen from "./screens/NotificationScreen";
 // import { AliveScope, KeepAlive } from "react-activation";
 import { AliveScope } from "react-activation";
 import NoticeWriteScreen from "./screens/notice/NoticeWriteScreen";
+import QuestScreen from "./screens/QuestScreen";
+import ExperienceList from "./screens/ExperienceList";
 
 const Layout = () => (
   <div className="page">
@@ -91,6 +93,8 @@ function App() {
             <Route path="/notice/detail" element={<NoticeDetailScreen />} />
             <Route path="/profile" element={<ProfileScreen />} />
             <Route path="/passwordchange" element={<PasswordChangeScreen />} />
+            <Route path="/quest" element={<QuestScreen />} />
+            <Route path="/Explist" element={<ExperienceList />} />
           </Route>
           <Route
             path="/login"
