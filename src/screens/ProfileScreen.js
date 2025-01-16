@@ -50,7 +50,7 @@ const ProfileScreen = () => {
         setLevelName(data.levelName);
 
         if (data.profileCharacter) {
-          setProfileCharacter(data.profileCharacter);
+          setProfileCharacter(data.profileCharacter.toLowerCase());
         } else {
           setProfileCharacter("default");
         }
@@ -90,6 +90,15 @@ const ProfileScreen = () => {
         <span className="subtitle-1-regular">{text2}</span>
       </div>
     );
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await customAxios.post("/auth/logout");
+      navigate("/login");
+    } catch (error) {
+      console.log("로그아웃 error: ", error);
+    }
   };
 
   return (
@@ -164,10 +173,21 @@ const ProfileScreen = () => {
       </div>
       <div style={{ ...theme.boxTheme.boxContainer, marginBottom: 29 }}>
         <Content text1="아이디" text2={loginId} isMargin={true} />
-        <div style={theme.boxTheme.rowContainer}>
+        <div
+          style={{ ...theme.boxTheme.rowContainer, ...styles.marginBottom24 }}
+        >
           <span className="subtitle-1-bold">비밀번호 변경</span>
           <PressableButton
             onClick={() => navigate("/passwordchange")}
+            pressedStyle={{ opacity: 0.5 }}
+          >
+            <img src={Arrow} alt="arrow" />
+          </PressableButton>
+        </div>
+        <div style={theme.boxTheme.rowContainer}>
+          <span className="subtitle-1-bold">로그아웃</span>
+          <PressableButton
+            onClick={handleLogout}
             pressedStyle={{ opacity: 0.5 }}
           >
             <img src={Arrow} alt="arrow" />

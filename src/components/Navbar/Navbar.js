@@ -17,7 +17,14 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const allowedPaths = ["/", "/myexp", "/notice", "/notice/detail", "/profile"];
+  const allowedPaths = [
+    "/",
+    "/myexp",
+    "/quest",
+    "/notice",
+    "/notice/detail",
+    "/profile",
+  ];
 
   // 현재 경로가 allowedPaths에 포함되지 않으면 null 반환
   if (!allowedPaths.includes(location.pathname)) {
@@ -72,7 +79,7 @@ export default function Navbar() {
         </NavLink>
       </div>
 
-      {/* <div>
+      <div>
         <NavLink
           to="/quest"
           className={({ isActive }) =>
@@ -90,7 +97,7 @@ export default function Navbar() {
           />
           퀘스트
         </NavLink>
-      </div> */}
+      </div>
 
       <div>
         <NavLink
@@ -144,23 +151,6 @@ export default function Navbar() {
             alt="profile"
           />
           프로필
-        </NavLink>
-      </div>
-
-      <div>
-        {/* 로그인 네비게이션 추가 */}
-        <NavLink
-          to="/quest"
-          className={({ isActive }) =>
-            isActive ? "nav-link active" : "nav-link"
-          }
-          onClick={(e) => {
-            e.preventDefault();
-            handleNavigation("/quest");
-          }}
-          style={styles.navContainer}
-        >
-          퀘스트
         </NavLink>
       </div>
     </nav>

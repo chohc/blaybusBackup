@@ -14,7 +14,7 @@ import PressableButton from "../components/PressableButton";
 import { useNavigate } from "react-router-dom";
 import { customAxios } from "../customAxios";
 
-const HomeScreen = () => {
+const HomeScreen = ({ setMyLevel }) => {
   const navigate = useNavigate();
   const [levelName, setLevelName] = useState("");
   const [totalExperience, setTotalExperience] = useState("");
@@ -26,6 +26,7 @@ const HomeScreen = () => {
         console.log("GET: ", data);
         setTotalExperience(data.totalExperience);
         setLevelName(data.levelName);
+        setMyLevel(data.levelName);
       } catch (error) {
         console.error("GET error: ", error);
       }

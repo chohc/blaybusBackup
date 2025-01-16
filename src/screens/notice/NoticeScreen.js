@@ -7,9 +7,10 @@ import { customAxios } from "../../customAxios";
 import PressableButton from "../../components/PressableButton";
 import Add from "../../icons/add.svg";
 
-const NoticeScreen = ({ isAdmin }) => {
+const NoticeScreen = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const isAdmin = localStorage.getItem("isAdmin");
   const [post, setPost] = useState([]);
 
   const loadPost = async () => {
@@ -68,7 +69,7 @@ const NoticeScreen = ({ isAdmin }) => {
         })}
       </div>
       {/* admin account */}
-      {isAdmin && (
+      {isAdmin === "true" && (
         <PressableButton
           onClick={() => {
             navigate("/notice/write");

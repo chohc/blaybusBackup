@@ -20,8 +20,9 @@ const ProfileSettingScreen = () => {
 
   const handleChangeProfile = async () => {
     try {
+      console.log(selectedItem.toUpperCase());
       const response = await customAxios.put(`/members/update-char`, {
-        profile_character: selectedItem,
+        profileCharacter: selectedItem.toUpperCase(),
       });
       console.log("PUT: ", response);
       navigate(-1);

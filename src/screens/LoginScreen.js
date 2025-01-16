@@ -8,7 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-const LoginScreen = ({ setIsLogin, setIsAdmin }) => {
+const LoginScreen = ({ setIsLogin }) => {
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
   const [focusedInput, setFocusedInput] = useState(null);
@@ -41,10 +41,11 @@ const LoginScreen = ({ setIsLogin, setIsAdmin }) => {
         toast.success("로그인 성공!", {
           duration: 1000,
         });
-        if (input1 === "2222" && input2 === "2222") {
-          setIsAdmin(true);
+        // 어드민 계정 설정
+        if (input1 === "admin" && input2 === "admin") {
+          localStorage.setItem("isAdmin", true);
         } else {
-          setIsAdmin(false);
+          localStorage.setItem("isAdmin", false);
         }
         setIsLogin(true);
         setTimeout(() => navigate("/", { replace: true }), 0);
@@ -183,7 +184,7 @@ const styles = {
     position: "absolute",
     right: 17,
     cursor: "pointer",
-    marginBottom:"13px",
+    marginBottom: "13px",
     height: 24,
     width: 24,
   },

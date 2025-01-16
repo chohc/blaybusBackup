@@ -3,9 +3,11 @@ import colors from "../colors/colors";
 import { theme } from "../themes/theme";
 import LevelChip from "./LevelChip";
 
-export const MyExpBox = ({ levelName, totalExperience, bgWhite = false }) => {
-  if (!levelName) return;
-
+export const MyExpBox = ({
+  levelName = "F1-I",
+  totalExperience = 0,
+  bgWhite = false,
+}) => {
   const level_color = {
     "F1-I": colors.Level.Bronze,
     "F1-Ⅱ": colors.Level.Bronze,
@@ -64,7 +66,7 @@ export const MyExpBox = ({ levelName, totalExperience, bgWhite = false }) => {
         <div style={styles.subContainer}>
           <LevelChip
             text={
-              levelName.length > 3
+              levelName && levelName.length > 3
                 ? `${levelName.slice(0, 2)} - ${levelName.slice(3)}`
                 : levelName
             }
