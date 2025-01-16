@@ -5,6 +5,9 @@ import colors from "../colors/colors";
 import arrowBack from "../images/arrow_back.png";
 import arrowDown from "../images/down_arrow.png";
 import { RecentExprience } from "../components/QuestExperience";
+import { MyExpBox } from "../components/MyExpBox";
+import PressableButton from "../components/PressableButton";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const styles = {
   container: {
@@ -85,15 +88,22 @@ const styles = {
   },
 };
 
-const ExperienceList = () => {
+const ExperienceList = ({ myLevel, myTotalExperience }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="page" style={styles.container}>
       <div style={styles.header}>
-        <img src={arrowBack} style={styles.headerImage} alt="icon" />
+        <PressableButton
+          onClick={() => navigate(-1)}
+          pressedStyle={{ opacity: 0.5 }}
+        >
+          <img src={arrowBack} style={styles.headerImage} alt="icon" />
+        </PressableButton>
         <span style={styles.headerText}>경험치 달성 목록</span>
       </div>
-      <div style={styles.MyExp}>
-        <div style={{ alignSelf: "stretch", display: "flex" }} />
+      <div style={{ width: "100%", padding: "0px 20px" }}>
+        <MyExpBox levelName={myLevel} totalExperience={myTotalExperience} />
       </div>
       <div style={styles.statsContainer}>
         <span style={styles.statsText}>총</span>
