@@ -88,7 +88,6 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<Home setMyLevel={setMyLevel} />} />
             <Route path="/myexp" element={<MyExpScreen myLevel={myLevel} />} />
-            <Route path="/quest" element={<h2>퀘스트</h2>} />
             <Route path="/notice" element={<NoticeScreen />} />
             <Route path="/notice/detail" element={<NoticeDetailScreen />} />
             <Route path="/profile" element={<ProfileScreen />} />
