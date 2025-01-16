@@ -150,17 +150,17 @@ export default function Navbar() {
       <div>
         {/* 로그인 네비게이션 추가 */}
         <NavLink
-          to="/login"
+          to="/quest"
           className={({ isActive }) =>
             isActive ? "nav-link active" : "nav-link"
           }
           onClick={(e) => {
             e.preventDefault();
-            handleNavigation("/login");
+            handleNavigation("/quest");
           }}
           style={styles.navContainer}
         >
-          로그인
+          퀘스트
         </NavLink>
       </div>
     </nav>
