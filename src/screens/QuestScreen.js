@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
 import "../fonts/font.css";
-import colors from "../colors/colors";
+import Navbar from "../components/Navbar/Navbar";
 import toast from "react-hot-toast";
 
 import LeftArrow from "../images/quest/arrow_left_black.png";
@@ -9,6 +9,9 @@ import RightArrowBlack from "../images/quest/arrow_right_black.png";
 import RightArrowGray from "../images/quest/arrow_right_gray.png";
 import RecentExperience from "../components/RecentExperience";
 import axios from "axios";
+
+import TaskIcon from "../images/exp/duty_image.png";
+import LeaderAssignmentIcon from "../images/exp/leader_image.png";
 
 const QuestScreen = () => {
   const [quests, setQuests] = useState([]); // 퀘스트 데이터를 저장할 상태
@@ -152,23 +155,37 @@ const QuestScreen = () => {
       {/* Cards Section */}
       <div style={styles.cardsContainer}>
         {quests && quests.length > 0 ? (
-          quests.map((quest, index) => (
-            <div key={index} style={styles.cardWrapper}>
-              <RecentExperience
-                title={quest.title || "제목 없음"}
-                badgeText={quest.achievedLevel || "N/A"}
-                maxBadgeText={quest.questFrequency || "MONTHLY"}
-                month={new Date(quest.date).toLocaleString("ko-KR", { month: "long" })}
-                date={quest.date || "날짜 없음"}
-                count={`${quest.experience || 0} EXP`}
-                points={quest.experience || 0}
-              />
-            </div>
-          ))
+          quests.map((quest, index) => {
+            const isAchieved = quest.experience > 0;
+            const icon = quest.questType === "TASK" ? TaskIcon : LeaderAssignmentIcon;
+            const badgeText = quest.questType === "TASK" ? "직무별" : "리더부여";
+
+            return (
+              <div
+                key={index}
+                style={{
+                  ...styles.cardWrapper,
+                  backgroundColor: isAchieved ? "#FFFFFF" : "#E0E0E0",
+                }}
+              >
+                <RecentExperience
+                  title={quest.title || "제목 없음"}
+                  badgeText={badgeText}
+                  maxBadgeText={quest.achievedLevel || "N/A"}
+                  month={quest.questFrequency || "주기 없음"}
+                  date={quest.date || "날짜 없음"}
+                  count={quest.description || "설명 없음"}
+                  points={quest.experience || 0}
+                  icon={icon}
+                />
+              </div>
+            );
+          })
         ) : (
           <div>퀘스트 데이터가 없습니다.</div>
         )}
       </div>
+      
     </div>
   );
 };
@@ -251,7 +268,7 @@ const styles = {
     gap: "12px",
   },
   cardWrapper: {
-    marginBottom: "12px", 
+    marginBottom: "12px", // 컴포넌트 사이 여백 설정
   },
 };
 
