@@ -31,6 +31,7 @@ function App() {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
   const [myLevel, setMyLevel] = useState("");
+  const [myTotalExperience, setMytotalExperience] = useState("");
 
   // FCM
   useEffect(() => {
@@ -86,14 +87,30 @@ function App() {
       <AliveScope>
         <Routes>
           <Route element={<Layout />}>
-            <Route path="/" element={<Home setMyLevel={setMyLevel} />} />
+            <Route
+              path="/"
+              element={
+                <Home
+                  setMyLevel={setMyLevel}
+                  setMytotalExperience={setMytotalExperience}
+                />
+              }
+            />
             <Route path="/myexp" element={<MyExpScreen myLevel={myLevel} />} />
             <Route path="/notice" element={<NoticeScreen />} />
             <Route path="/notice/detail" element={<NoticeDetailScreen />} />
             <Route path="/profile" element={<ProfileScreen />} />
             <Route path="/passwordchange" element={<PasswordChangeScreen />} />
             <Route path="/quest" element={<QuestScreen />} />
-            <Route path="/experiences" element={<ExperienceList />} />
+            <Route
+              path="/experiences"
+              element={
+                <ExperienceList
+                  myLevel={myLevel}
+                  myTotalExperience={myTotalExperience}
+                />
+              }
+            />
           </Route>
           <Route
             path="/login"

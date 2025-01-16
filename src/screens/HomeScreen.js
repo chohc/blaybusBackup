@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { customAxios } from "../customAxios";
 import RecentExperience from "../components/RecentExperience";
 
-const HomeScreen = ({ setMyLevel }) => {
+const HomeScreen = ({ setMyLevel, setMytotalExperience }) => {
   const navigate = useNavigate();
   const [levelName, setLevelName] = useState("");
   const [totalExperience, setTotalExperience] = useState("");
@@ -28,6 +28,7 @@ const HomeScreen = ({ setMyLevel }) => {
         setTotalExperience(data.totalExperience);
         setLevelName(data.levelName);
         setMyLevel(data.levelName);
+        setMytotalExperience(data.totalExperience);
       } catch (error) {
         console.error("회원 정보 가져오기 오류: ", error);
       }
@@ -37,7 +38,7 @@ const HomeScreen = ({ setMyLevel }) => {
       try {
         const { data } = await customAxios.get("/experiences/recent");
         console.log("최근 경험치 API 응답 데이터: ", data);
-    
+
         if (Array.isArray(data)) {
           setRecentExperiences(data); // 데이터가 배열이면 그대로 사용
         } else if (data && typeof data === "object") {
@@ -58,7 +59,7 @@ const HomeScreen = ({ setMyLevel }) => {
   return (
     <div className="page" style={styles.container}>
       {/* Total experience */}
-      <div style={{ width: "100%", padding: "0px 20px", marginTop:"64px" }}>
+      <div style={{ width: "100%", padding: "0px 20px", marginTop: "64px" }}>
         <MyExpBox
           levelName={levelName}
           totalExperience={totalExperience}
@@ -104,17 +105,16 @@ const HomeScreen = ({ setMyLevel }) => {
 
         {recentExperiences.length > 0 ? (
           recentExperiences.map((experience, index) => (
-            
-              <RecentExperience
-                title={experience.title || "제목 없음"}
-                badgeText={experience.type || "구분 없음"}
-                maxBadgeText={experience.reason || "달성 정보 없음"}
-                month={experience.exp || "0"}
-                date={experience.date || "날짜 없음"}
-                count={experience.description || "설명 없음"}
-                points={experience.exp || 0}
-                icon={chevronRight}
-              />
+            <RecentExperience
+              title={experience.title || "제목 없음"}
+              badgeText={experience.type || "구분 없음"}
+              maxBadgeText={experience.reason || "달성 정보 없음"}
+              month={experience.exp || "0"}
+              date={experience.date || "날짜 없음"}
+              count={experience.description || "설명 없음"}
+              points={experience.exp || 0}
+              icon={chevronRight}
+            />
           ))
         ) : (
           <div style={{ textAlign: "center", color: colors.gray[600] }}>
@@ -131,7 +131,7 @@ const styles = {
     backgroundImage: `url(${HomeBackground})`,
     minWidth: "100vw",
     maxWidth: "390px",
- 
+
     paddingTop: 20,
   },
   vedioContainer: {
