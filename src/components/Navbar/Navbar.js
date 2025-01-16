@@ -24,7 +24,9 @@ export default function Navbar() {
     "/notice",
     "/notice/detail",
     "/profile",
+    "/quest",
   ];
+
 
   // 현재 경로가 allowedPaths에 포함되지 않으면 null 반환
   if (!allowedPaths.includes(location.pathname)) {
