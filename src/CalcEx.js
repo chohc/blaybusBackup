@@ -94,7 +94,7 @@ export const getTotalExpInfo = (level, totalExp) => {
   const nextLevel = levels[currentIndex + 1];
   const nextLevelExp = experience[nextLevel];
   const remainExp = Math.max(nextLevelExp - totalExp, 0); // 음수 방지
-  const percent = ((totalExp / nextLevelExp) * 100).toFixed(2);
+  const percent = Math.round((totalExp / nextLevelExp) * 100);
   return {
     nextLevel,
     nextLevelExp,

@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { customAxios } from "../customAxios";
 import RecentExperience from "../components/RecentExperience";
 
-const HomeScreen = () => {
+const HomeScreen = ({ setMyLevel }) => {
   const navigate = useNavigate();
   const [levelName, setLevelName] = useState("");
   const [totalExperience, setTotalExperience] = useState("");
@@ -27,6 +27,7 @@ const HomeScreen = () => {
         console.log("회원 정보 API 응답: ", data);
         setTotalExperience(data.totalExperience);
         setLevelName(data.levelName);
+        setMyLevel(data.levelName);
       } catch (error) {
         console.error("회원 정보 가져오기 오류: ", error);
       }
@@ -130,17 +131,7 @@ const styles = {
     backgroundImage: `url(${HomeBackground})`,
     minWidth: "100vw",
     maxWidth: "390px",
-    marginLeft: "auto",
-    marginRight: "auto",
-    minHeight: "100vh",
-    maxHeight: "auto",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "start",
-    msScrollLimit: "0 0 0 0",
-    msOverflowStyle: "none",
-    overscrollBehavior: "none",
+ 
     paddingTop: 20,
   },
   vedioContainer: {

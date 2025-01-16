@@ -67,7 +67,7 @@ export const theme = {
     },
     header: {
       display: "flex",
-      maxWidth: 420,
+      maxWidth: 390,
       height: 48,
       alignItems: "center",
       justifyContent: "center",
@@ -91,7 +91,7 @@ export const theme = {
     },
     header: {
       display: "flex",
-      maxWidth: 420,
+      maxWidth: 390,
       height: 48,
       alignItems: "center",
       justifyContent: "center",
