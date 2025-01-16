@@ -17,7 +17,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const allowedPaths = ["/", "/myexp", "/notice", "/notice/detail", "/profile"];
+  const allowedPaths = ["/", "/myexp", "/notice", "/notice/detail", "/profile","/quest"];
 
   // 현재 경로가 allowedPaths에 포함되지 않으면 null 반환
   if (!allowedPaths.includes(location.pathname)) {

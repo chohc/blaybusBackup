@@ -106,7 +106,7 @@ function App() {
             />
             <Route path="/passwordchange" element={<PasswordChangeScreen />} />
             <Route path="/quest" element={<QuestScreen />} />
-            <Route path="/Explist" element={<ExperienceList />} />
+            <Route path="/experiences" element={<ExperienceList />} />
           </Route>
           <Route
             path="/login"
