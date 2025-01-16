@@ -4,7 +4,7 @@ import "../fonts/font.css";
 import colors from "../colors/colors";
 import arrowBack from "../images/arrow_back.png";
 import arrowDown from "../images/down_arrow.png";
-import { RecentExprience } from "../components/RecentExperience";
+import { RecentExprience } from "../components/QuestExperience";
 
 const styles = {
   container: {
