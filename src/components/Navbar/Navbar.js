@@ -153,6 +153,26 @@ export default function Navbar() {
           프로필
         </NavLink>
       </div>
+<<<<<<< HEAD
+=======
+
+      <div>
+        {/* 로그인 네비게이션 추가 */}
+        <NavLink
+          to="/quest"
+          className={({ isActive }) =>
+            isActive ? "nav-link active" : "nav-link"
+          }
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavigation("/quest");
+          }}
+          style={styles.navContainer}
+        >
+          퀘스트
+        </NavLink>
+      </div>
+>>>>>>> cf1440e54b5746cb5abcaa961909f6d76567fa11
     </nav>
   );
 }
