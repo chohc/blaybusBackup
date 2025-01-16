@@ -8,6 +8,7 @@ import "../fonts/font.css";
 import { customAxios } from "../customAxios";
 import { useNavigate } from "react-router-dom";
 import PressableButton from "../components/PressableButton";
+import toast from "react-hot-toast";
 
 const PasswordChangeScreen = () => {
   const navigate = useNavigate();
@@ -72,6 +73,9 @@ const PasswordChangeScreen = () => {
         newPassword: newPassword,
       });
       console.log("비밀번호변경: ", response);
+      toast.success("비밀번호 변경 완료!", {
+        duration: 1000,
+      });
       navigate(-1);
     } catch (error) {
       console.warn("비밀번호변경 오류: ", error);
@@ -175,7 +179,9 @@ const PasswordChangeScreen = () => {
             transition: "opacity 0.5s ease-out, visibility 0.5s ease-out",
           }}
         >
-          <span style={styles.errorText}>현재 비밀번호를 다시 확인해주세요.</span>
+          <span style={styles.errorText}>
+            현재 비밀번호를 다시 확인해주세요.
+          </span>
         </div>
       )}
     </div>
